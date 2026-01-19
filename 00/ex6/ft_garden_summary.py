@@ -1,23 +1,20 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         ::::::::             #
-#    ft_count_harvest_recursive.py                      :+:    :+:             #
+#    ft_garden_summary.py                               :+:    :+:             #
 #                                                      +:+                     #
 #    By: laveerka <laveerka@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2025/12/18 10:59:36 by laveerka      #+#    #+#                  #
-#    Updated: 2026/01/19 11:39:02 by laveerka      ########   odam.nl          #
+#    Created: 2026/01/19 11:44:47 by laveerka      #+#    #+#                  #
+#    Updated: 2026/01/19 11:47:02 by laveerka      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-def recursive_count(total_days, current_day):
-	if (current_day > total_days):
-		print("Havest time!")
-	else:
-		print("Day: ", current_day)
-		recursive_count(total_days, current_day + 1)
-
-def ft_count_harvest_recursive():
-	print("Days until harvest: ")
-	days = int(input())
-	recursive_count(days, 1)
+def ft_garden_summary():
+	print("Enter garden name: ")
+	name = input()
+	print("Enter numer of plants: ")
+	number = input()
+	print("Garden: " + name)
+	print("Plants: " + number)
+	print("Status: Growing well!")

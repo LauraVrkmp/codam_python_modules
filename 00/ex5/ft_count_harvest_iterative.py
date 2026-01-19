@@ -1,18 +1,18 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         ::::::::             #
-#    ft_count_harvest_iterative.py                      :+:    :+:             #
-#                                                      +:+                     #
-#    By: laveerka <laveerka@student.codam.nl>         +#+                      #
-#                                                    +#+                       #
-#    Created: 2025/12/18 10:59:25 by laveerka      #+#    #+#                  #
-#    Updated: 2025/12/18 11:09:53 by laveerka      ########   odam.nl          #
-#                                                                              #
-# **************************************************************************** #
+# ************************************************************************* #
+#                                                                           #
+#                                                      :::      ::::::::    #
+#  ft_count_harvest_iterative.py                     :+:      :+:    :+:    #
+#                                                  +:+ +:+         +:+      #
+#  By: laura <laura@student.42.fr>               +#+  +:+       +#+         #
+#                                              +#+#+#+#+#+   +#+            #
+#  Created: 2026/01/19 17:56:47 by laura           #+#    #+#               #
+#  Updated: 2026/01/19 18:00:06 by laura           ###   ########.fr        #
+#                                                                           #
+# ************************************************************************* #
 
 def ft_count_harvest_iterative():
-	print("Days until harvest: ")
-	days = int(input())
-	for i in range(1, days + 1):
-		print("Day ", i)
-	print("Harvest time!")
+    print("Days until harvest: ")
+    days = int(input())
+    for i in range(1, days + 1):
+        print("Day ", i)
+    print("Harvest time!")

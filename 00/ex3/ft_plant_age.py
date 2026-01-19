@@ -1,19 +1,19 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         ::::::::             #
-#    ft_plant_age.py                                    :+:    :+:             #
-#                                                      +:+                     #
-#    By: laveerka <laveerka@student.codam.nl>         +#+                      #
-#                                                    +#+                       #
-#    Created: 2025/12/18 10:56:06 by laveerka      #+#    #+#                  #
-#    Updated: 2025/12/18 10:57:12 by laveerka      ########   odam.nl          #
-#                                                                              #
-# **************************************************************************** #
+# ************************************************************************* #
+#                                                                           #
+#                                                      :::      ::::::::    #
+#  ft_plant_age.py                                   :+:      :+:    :+:    #
+#                                                  +:+ +:+         +:+      #
+#  By: laura <laura@student.42.fr>               +#+  +:+       +#+         #
+#                                              +#+#+#+#+#+   +#+            #
+#  Created: 2026/01/19 17:56:26 by laura           #+#    #+#               #
+#  Updated: 2026/01/19 17:59:29 by laura           ###   ########.fr        #
+#                                                                           #
+# ************************************************************************* #
 
 def ft_plant_age():
-	print("Enter plant age in days: ")
-	age = int(input())
-	if age > 60:
-		print("Plant is ready to harvest!")
-	else:
-		print("Plant needs more time to grow.")
+    print("Enter plant age in days: ")
+    age = int(input())
+    if age > 60:
+        print("Plant is ready to harvest!")
+    else:
+        print("Plant needs more time to grow.")

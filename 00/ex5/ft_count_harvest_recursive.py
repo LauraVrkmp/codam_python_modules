@@ -10,15 +10,16 @@
 #                                                                           #
 # ************************************************************************* #
 
+# shrink to one function?
+
 def recursive_count(total_days, current_day):
     if (current_day > total_days):
-        print("Havest time!")
+        print("Harvest time!")
     else:
-        print("Day: ", current_day)
+        print(f"Day {current_day}")
         recursive_count(total_days, current_day + 1)
 
 
 def ft_count_harvest_recursive():
-    print("Days until harvest: ")
-    days = int(input())
+    days = int(input("Days until harvest: "))
     recursive_count(days, 1)

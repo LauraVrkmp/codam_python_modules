@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/22 10:36:35 by laveerka        #+#    #+#               #
-#  Updated: 2026/01/27 07:52:00 by laveerka        ###   ########.fr        #
+#  Updated: 2026/01/27 11:53:54 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -26,11 +26,12 @@ class Flower(Plant):
         return "Flower"
 
     def bloom(self) -> None:
-        print(f"{self.get_type()} is blooming beautifully!")
+        print(f"{self.name} is blooming beautifully!")
 
 
 class Tree(Plant):
-    def __init__(self, name: str, height: int, days: int, trunk_diameter: int) -> None:
+    def __init__(self, name: str, height: int, days: int,
+                 trunk_diameter: int) -> None:
         super().__init__(name, height, days)
         self.trunk_diameter = trunk_diameter
     
@@ -42,7 +43,8 @@ class Tree(Plant):
 
 
 class Vegetable(Plant):
-    def __init__(self, name: str, height: int, days: int, harvest_season: str, nutritional_value: str) -> None:
+    def __init__(self, name: str, height: int, days: int,
+                 harvest_season: str, nutritional_value: str) -> None:
         super().__init__(name, height, days)
         self.harvest_season = harvest_season
         self.nutritional_value = nutritional_value
@@ -54,9 +56,22 @@ class Vegetable(Plant):
 def garden_types():
     print("=== Garden Plant Types ===\n")
     rose = Flower("Rose", 25, 30, "red")
-    print(f"{rose.name} ({rose.get_type}): {rose.height}cm, {rose.days} days, {rose.color} color")
+    sunflower = Flower("Sunflower", 150, 45, "yellow")
+    print(f"{rose.name} ({rose.get_type()}): {rose.height}cm, {rose.days} "
+          "days, {rose.color} color")
     rose.bloom()
     print()
+    oak = Tree("Oak", 500, 1825, 50)
+    birch = Tree("Birch", 350, 1255, 32)
+    print(f"{oak.name} ({oak.get_type()}): {oak.height}cm, {oak.days} "
+          "days, {oak.trunk_diameter}cm diameter")
+    oak.produce_shade()
+    print()
+    tomato = Vegetable("Tomato", 80, 90, "summer", "vitamin C")
+    sprout = Vegetable("Sprout", 15, 60, "winter", "vitamin K")
+    print(f"{tomato.name} ({tomato.get_type()}): {tomato.height}cm, "
+          "{tomato.days} days, {tomato.harvest_season} harvest")
+    print(f"{tomato.name} is rich in {tomato.nutritional_value}")
 
 
 if __name__ == "__main__":

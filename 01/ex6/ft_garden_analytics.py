@@ -6,9 +6,12 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/22 10:36:50 by laveerka        #+#    #+#               #
-#  Updated: 2026/01/30 10:35:43 by laveerka        ###   ########.fr        #
+#  Updated: 2026/01/30 12:42:04 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
+
+# include docstrings, perform height validation, check flowering vs.
+# prize flowers
 
 class Plant:
     total_plants = 0
@@ -43,10 +46,6 @@ class FloweringPlant(Plant):
         print(f"- {self.name}: {self.height}cm, {self.color} "
               f"flower (blooming)")
 
-    # @classmethod
-    # def get_total(cls):
-    #     return cls.total_flowering
-
 
 class PrizeFlower(FloweringPlant):
     total_prize = 0
@@ -59,10 +58,6 @@ class PrizeFlower(FloweringPlant):
     def describe(self):
         print(f"- {self.name}: {self.height}cm, {self.color} flower (blooming)"
               f", Prize points: {self.points}")
-
-    # @classmethod
-    # def get_total(cls):
-    #     return cls.total_prize
 
 
 class Garden:
@@ -81,34 +76,35 @@ class Garden:
 
 
 class GardenStats:
-    def total_plants(self):
-        total = (Plant.get_total() + FloweringPlant.get_total()
-                 + PrizeFlower.get_total())
-        print(f"Plants added: {total}")
+    def __init__(self, manager: "GardenManager"):
+        self.manager = manager
 
-    @staticmethod
-    def total_growth(garden: Garden):
-        total = 0
-        for plant in garden.plants:
-            total += plant.growth_rate
-        print(f"Total growth: {total}")
+    def total_plants_growth(self):
+        total_growth = 0
+        for garden in self.manager.gardens.values():
+            for plant in garden.plants:
+                total_growth += plant.growth_rate
+        print(f"Plants added: {Plant.total_plants}, "
+              f"Total growth: {total_growth}")
 
     def plant_types(self):
-        print(f"Plant types: {Plant.get_total()} regular, "
-              f"{FloweringPlant.get_total()} flowering, "
-              f"{PrizeFlower.get_total()} prize flowers")
+        regular = Plant.total_plants - FloweringPlant.total_flowering
+        flowering = FloweringPlant.total_flowering - PrizeFlower.total_prize
+        prize = PrizeFlower.total_prize
+        print(f"Plant types: {regular} regular, {flowering} flowering, "
+              f"{prize} prize flowers")
 
-    def scores(self, garden: Garden):
+    def scores(self, garden: Garden) -> int:
         total = 0
         for plant in garden.plants:
             total += plant.height
-        print(f"Total growth: {total}cm")
+        return total
 
 
 class GardenManager:
     def __init__(self) -> None:
         self.gardens: dict[str, Garden] = {}
-        self.stats = GardenStats()
+        self.stats = GardenStats(self)
 
     def add_garden(self, garden: Garden) -> None:
         self.gardens[garden.owner] = garden
@@ -120,9 +116,6 @@ class GardenManager:
         bob = Garden("Bob")
         manager.add_garden(alice)
         manager.add_garden(bob)
-        alice.add_plant(Plant("Oak Tree", 100))
-        alice.add_plant(FloweringPlant("Rose", 25, "red"))
-        alice.add_plant(PrizeFlower("Sunflower", 50, "yellow", 10))
         return manager
 
     def total_gardens(self) -> int:
@@ -133,31 +126,34 @@ class GardenManager:
 
 
 def print_demo() -> GardenManager:
-    print("=== Garden Management System Demo ===\n")
+    print("=== Garden Management System Demo ===")
     manager = GardenManager.create_garden_network()
+    manager.gardens["Alice"].grow_all()
+    manager.gardens["Alice"].add_plant(Plant("Oak Tree", 100))
+    manager.gardens["Alice"].add_plant(FloweringPlant("Rose", 25, "red"))
+    manager.gardens["Alice"].add_plant(PrizeFlower("Sunflower", 50,
+                                                   "yellow", 10))
     manager.gardens["Alice"].grow_all()
     return manager
 
 
 def print_report(manager: GardenManager):
-    alice_garden = manager.gardens["Alice"]
-    bob_garden = manager.gardens["Bob"]
-    print("\n=== Alice's Garden Report ===")
+    print(f"=== {manager.gardens["Alice"].owner}'s Garden Report ===")
     print("Plants in garden:")
     for plant in manager.gardens["Alice"].plants:
         plant.describe()
-    manager.stats.total_plants()
-    manager.stats.total_growth(alice_garden)
+    print()
+    manager.stats.total_plants_growth()
     manager.stats.plant_types()
     print()
     print("Height validation test: ...")
     print(f"Garden scores - Alice: "
-          f"{manager.stats.scores(alice_garden)}, Bob: "
-          f"{manager.stats.scores(bob_garden)}")
+          f"{manager.stats.scores(manager.gardens["Alice"])}, Bob: "
+          f"{manager.stats.scores(manager.gardens["Bob"])}")
     print(f"Total gardens managed: {manager.total_gardens()}")
 
 
 if __name__ == "__main__":
-    print("== Garden Management System Demo ===\n")
-    manager = GardenManager.create_garden_network()
+    manager = print_demo()
+    print()
     print_report(manager)

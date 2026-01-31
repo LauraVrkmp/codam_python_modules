@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/22 10:36:50 by laveerka        #+#    #+#               #
-#  Updated: 2026/01/30 12:42:04 by laveerka        ###   ########.fr        #
+#  Updated: 2026/01/31 13:50:05 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -153,7 +153,11 @@ def print_report(manager: GardenManager):
     print(f"Total gardens managed: {manager.total_gardens()}")
 
 
-if __name__ == "__main__":
+def main():
     manager = print_demo()
     print()
     print_report(manager)
+
+
+if __name__ == "__main__":
+    main()

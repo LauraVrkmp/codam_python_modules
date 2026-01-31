@@ -6,33 +6,48 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/22 10:35:56 by laveerka        #+#    #+#               #
-#  Updated: 2026/01/23 09:27:40 by laveerka        ###   ########.fr        #
+#  Updated: 2026/01/31 12:21:25 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 class Plant:
-    def __init__(self, name: str, height: int, days: int):
+    """
+    Generates a plant object with name, height and age attributes
+    """
+    def __init__(self, name: str, height: int, days: int) -> None:
         self.name = name
         self.height = height
         self.days = days
 
-    def grow(self):
+    """Allows the plant object to grow height by 1"""
+    def grow(self) -> None:
         self.height += 1
 
-    def age(self):
+    """Allows the plant object to grow age by 1"""
+    def age(self) -> None:
         self.days += 1
 
 
-def get_info():
-    plant = Plant("Rose", 25, 30)
-    print("=== Day 1 ===")
+def get_info(plant: Plant, current_day: int) -> None:
+    """Prints information on the current day and attibutes of Plant"""
+    print(f"=== Day {current_day} ===")
     print(f"{plant.name}: {plant.height}cm, {plant.days} days old")
-    for _ in range(7):
+
+
+def main() -> None:
+    """Main function simulating plant growth"""
+    plant = Plant("Rose", 25, 30)
+    current_day = 1
+    growth = 0
+    get_info(plant, current_day)
+    for _ in range(6):
         plant.grow()
         plant.age()
-    print("=== Day 7 ===")
-    print(f"{plant.name}: {plant.height}cm, {plant.days} days old")
+        current_day += 1
+        growth += 1
+    get_info(plant, current_day)
+    print(f"Growth this week: +{growth}cm")
 
 
 if __name__ == "__main__":
-    get_info()
+    main()

@@ -6,18 +6,20 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/22 10:35:43 by laveerka        #+#    #+#               #
-#  Updated: 2026/01/23 09:17:37 by laveerka        ###   ########.fr        #
+#  Updated: 2026/01/31 12:21:38 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 class Plant:
-    def __init__(self, name: str, height: int, days: int):
+    """Initializes a plant object, with attributes name, height and age"""
+    def __init__(self, name: str, height: int, days: int) -> None:
         self.name = name
         self.height = height
         self.days = days
 
 
-def display_info():
+def display_info() -> None:
+    """Creates three plant objects and displays their information"""
     plants = [Plant("Rose", 25, 30), Plant("Sunflower", 80, 45),
               Plant("Cactus", 15, 120)]
     print("=== Garden Plant Registry ===")

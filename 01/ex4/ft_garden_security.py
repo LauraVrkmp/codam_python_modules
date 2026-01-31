@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_garden_security.py                             :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/22 10:36:22 by laveerka        #+#    #+#               #
-#  Updated: 2026/01/31 13:33:00 by laveerka        ###   ########.fr        #
+#  Updated: 2026/01/31 16:10:40 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -20,8 +20,8 @@ class SecurePlant:
             print("Plant created successfully [OK]")
         else:
             self.__name = name
-            self.__height = 0
-            self.__days = 0
+            self.__height = 1
+            self.__days = 1
             print("Invalid Plant data. Switching to safe defaults")
 
     def set_height(self, new_height: int) -> None:

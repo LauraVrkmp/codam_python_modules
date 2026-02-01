@@ -6,11 +6,12 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/31 16:32:29 by laveerka        #+#    #+#               #
-#  Updated: 2026/02/01 08:47:55 by laveerka        ###   ########.fr        #
+#  Updated: 2026/02/01 09:26:32 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 def garden_operations(choice: int) -> None:
+    """Tries operations based on argument choice, including except clauses"""
     if choice == 1:
         try:
             int("abc")
@@ -45,6 +46,7 @@ def garden_operations(choice: int) -> None:
 
 
 def test_error_types():
+    """Singular or multiple error testing"""
     print("Testing ValueError...")
     garden_operations(1)
     print("Testing ZeroDivisionError...")
@@ -58,6 +60,7 @@ def test_error_types():
 
 
 def main():
+    """Main to runt he error types demo"""
     print("=== Garden Error Types Demo ===\n")
     test_error_types()
     print("All error types tested successfully!")

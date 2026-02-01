@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_garden_analytics.py                            :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/22 10:36:50 by laveerka        #+#    #+#               #
-#  Updated: 2026/01/31 16:30:01 by laveerka        ###   ########.fr        #
+#  Updated: 2026/02/01 07:20:36 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -51,7 +51,8 @@ class FloweringPlant(Plant):
 class PrizeFlower(FloweringPlant):
     total_prize = 0
 
-    def __init__(self, name: str, height: int, color: str, points: int) -> None:
+    def __init__(self, name: str, height: int, color: str,
+                 points: int) -> None:
         """Initialize PrizeFlower object, specify prize points and total"""
         super().__init__(name, height, color)
         self.points = points
@@ -128,7 +129,7 @@ class GardenManager:
         for _ in self.gardens:
             total += 1
         return total
-    
+
     @classmethod
     def create_garden_network(cls) -> "GardenManager":
         """Class method to build full manager"""
@@ -154,7 +155,10 @@ def print_demo() -> GardenManager:
 
 
 def print_report(manager: GardenManager):
-    """Report on plants, totals and growth, types, height validation and scores"""
+    """
+    Report on plants, totals and growth, types,
+    height validation and scores
+    """
     print(f"=== {manager.gardens['Alice'].owner}'s Garden Report ===")
     print("Plants in garden:")
     for plant in manager.gardens["Alice"].plants:

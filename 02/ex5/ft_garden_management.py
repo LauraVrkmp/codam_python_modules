@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/31 16:34:06 by laveerka        #+#    #+#               #
-#  Updated: 2026/02/02 12:00:40 by laveerka        ###   ########.fr        #
+#  Updated: 2026/02/02 12:02:29 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -23,6 +23,8 @@ class GardenManager:
         self.plants: list[Plant] = []
 
     def add_plant(self, plant: Plant):
+        if plant.name is None or plant.name == "":
+            raise ValueError
         try:
             self.plants.append(plant)
             print(f"Added {plant.name} successfully")

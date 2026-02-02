@@ -6,11 +6,12 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/31 16:33:25 by laveerka        #+#    #+#               #
-#  Updated: 2026/02/02 07:42:19 by laveerka        ###   ########.fr        #
+#  Updated: 2026/02/02 08:11:06 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
-def water_plants(plant_list: list[str | None]):
+def water_plants(plant_list: list[str | None]) -> None:
+    """Safe watering of list of plants"""
     print("Opening watering system")
     try:
         for plant in plant_list:
@@ -23,7 +24,8 @@ def water_plants(plant_list: list[str | None]):
         print("Closing watering system (cleanup)")
 
 
-def test_watering_system():
+def test_watering_system() -> None:
+    """Test both valid and invalid list items"""
     print("\nTesting normal watering...")
     normal: list[str | None] = ["tomato", "lettuce", "carrots"]
     print("Watering completed successfully!")
@@ -33,7 +35,8 @@ def test_watering_system():
     water_plants(invalid)
 
 
-def main():
+def main() -> None:
+    """Main to test garden watering, including cleanup"""
     print("=== Garden Watering System ===")
     test_watering_system()
     print("\nCleanup always happens, even with errors!")

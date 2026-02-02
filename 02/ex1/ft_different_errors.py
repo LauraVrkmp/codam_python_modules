@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/31 16:32:29 by laveerka        #+#    #+#               #
-#  Updated: 2026/02/01 09:26:32 by laveerka        ###   ########.fr        #
+#  Updated: 2026/02/02 06:48:11 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -45,7 +45,7 @@ def garden_operations(choice: int) -> None:
             print("Caught an error, but program continues!\n")
 
 
-def test_error_types():
+def test_error_types() -> None:
     """Singular or multiple error testing"""
     print("Testing ValueError...")
     garden_operations(1)
@@ -59,7 +59,7 @@ def test_error_types():
     garden_operations(5)
 
 
-def main():
+def main() -> None:
     """Main to runt he error types demo"""
     print("=== Garden Error Types Demo ===\n")
     test_error_types()

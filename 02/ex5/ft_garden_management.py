@@ -6,15 +6,17 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/31 16:34:06 by laveerka        #+#    #+#               #
-#  Updated: 2026/02/02 09:54:21 by laveerka        ###   ########.fr        #
+#  Updated: 2026/02/02 12:00:40 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 class Plant:
-    def __init__(self, name: str, water_level: int, sunlight_hours: int):
+    def __init__(self, name: str | None, water_level: int,
+                 sunlight_hours: int):
         self.name = name
         self.water_level = water_level
         self.sunlight_hours = sunlight_hours
+
 
 class GardenManager:
     def __init__(self):
@@ -23,6 +25,7 @@ class GardenManager:
     def add_plant(self, plant: Plant):
         try:
             self.plants.append(plant)
+            print(f"Added {plant.name} successfully")
         except ValueError:
             print("Error adding plant: Plant name cannot be empty!")
 
@@ -37,17 +40,27 @@ class GardenManager:
         print("Checking plant health...")
         for plant in self.plants:
             if plant.water_level < 1:
-                print(f"Error: Water level {plant.water_level} is too low (min 1)")
+                print(f"Error: Water level {plant.water_level} "
+                      f"is too low (min 1)")
             elif plant.water_level > 10:
-                print(f"Error: Water level {plant.water_level} is too high (max 10)")
+                print(f"Error: Water level {plant.water_level} "
+                      f"is too high (max 10)")
             if plant.sunlight_hours < 2:
-                print(f"Error: Sunlight hours {plant.sunlight_hours} is too low (min 2)")
+                print(f"Error: Sunlight hours {plant.sunlight_hours} "
+                      f"is too low (min 2)")
             elif plant.sunlight_hours > 12:
-                print(f"Error: Sunlight hours {plant.sunlight_hours} is too high (max 12)")
+                print(f"Error: Sunlight hours {plant.sunlight_hours} "
+                      f"is too high (max 12)")
             print(f"{plant.name}")
 
 
 def test_garden_management():
+    garden = GardenManager()
+    print("Adding plants to garden...")
+    plants = [Plant("tomato", 5, 8), Plant("lettuce", 15, 6),
+              Plant(None, 7, 9)]
+    for plant in plants:
+        garden.add_plant(plant)
 
 
 def main():

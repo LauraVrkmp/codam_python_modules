@@ -6,14 +6,14 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/02/03 10:33:21 by laveerka        #+#    #+#               #
-#  Updated: 2026/02/12 08:41:25 by laveerka        ###   ########.fr        #
+#  Updated: 2026/02/12 11:11:29 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 import sys
 
 
-def main():
+def main() -> None:
     """Main to analyze player scores based on program arguments"""
     print("=== Player Score Analytics ===")
     args = len(sys.argv)

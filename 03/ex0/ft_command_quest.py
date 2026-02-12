@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/02/03 10:33:16 by laveerka        #+#    #+#               #
-#  Updated: 2026/02/05 10:38:25 by laveerka        ###   ########.fr        #
+#  Updated: 2026/02/12 08:40:33 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -14,6 +14,7 @@ import sys
 
 
 def main():
+    """Main to display arguments to program execution"""
     print("=== Command Quest ===")
     arg_count = len(sys.argv)
     if arg_count == 1:

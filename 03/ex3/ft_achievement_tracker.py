@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/02/03 10:33:35 by laveerka        #+#    #+#               #
-#  Updated: 2026/03/23 14:29:13 by laveerka        ###   ########.fr        #
+#  Updated: 2026/03/26 07:53:50 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -30,9 +30,10 @@ def main():
                                   "perfectionist"})]
     for player in players:
         print(f"Player {player.name} achievements: ")
-        for achievement in skills:
-            
-    
+        for characteristic in player.characterictics:
+            print(f"{characteristic}")
+    print("\n=== Achievement Analytics ===")
+
 
 if __name__ == "__Main__":
     main()

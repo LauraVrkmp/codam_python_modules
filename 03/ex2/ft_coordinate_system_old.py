@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/02/03 10:33:28 by laveerka        #+#    #+#               #
-#  Updated: 2026/05/19 14:39:13 by laveerka        ###   ########.fr        #
+#  Updated: 2026/02/12 11:26:06 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -16,30 +16,6 @@ import math
 
 
 def main() -> None:
-    print("=== Game Coordinate System ===\n")
-    print("Get a first set of coordinates")
-    first = get_player_pos()
-    try:
-        first_x, first_y, firts_z = tuple(input("Enter new coordinates as floats in format 'x,y,z':"))
-    except:
-        
-
-
-def get_player_pos() -> tuple:
-	while True:
-        try:
-            initial = input("Enter new coordinates as floats in format 'x,y,z'")
-            final = tuple(float(x) for x in initial.split(","))
-            if (len(final) != 3):
-                print("Couldn't parse three coordinates")
-                continue
-            break
-		expect ValueError:
-            print("")
-    return final
-            
-
-def old() -> None:
     print("=== Game Coordinate System ===\n")
     pos_0 = (0, 0, 0)
     x_0, y_0, z_0 = pos_0

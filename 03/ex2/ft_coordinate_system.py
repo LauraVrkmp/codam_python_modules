@@ -3,83 +3,56 @@
 #                                                      :::      ::::::::    #
 #  ft_coordinate_system.py                           :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/02/03 10:33:28 by laveerka        #+#    #+#               #
-#  Updated: 2026/05/19 14:39:13 by laveerka        ###   ########.fr        #
+#  Updated: 2026/06/14 04:07:43 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 import math
 
-# split main over try/excepts
+
+def get_player_pos() -> tuple[float, float, float]:
+    while True:
+        try:
+            initial = input(
+                "Enter new coordinates as floats in format "
+                "'x,y,z': "
+            )
+            parts = initial.split(",")
+            if (len(parts) != 3):
+                print("Invalid syntax")
+                continue
+            final: list[float] = []
+            for x in parts:
+                try:
+                    final.append(float(x))
+                except ValueError as error:
+                    raise ValueError(f"'{x}': {error}") from error
+            break
+        except ValueError as error:
+            print(f"Error on parameter: {error}")
+    return final[0], final[1], final[2]
 
 
 def main() -> None:
     print("=== Game Coordinate System ===\n")
     print("Get a first set of coordinates")
-    first = get_player_pos()
-    try:
-        first_x, first_y, firts_z = tuple(input("Enter new coordinates as floats in format 'x,y,z':"))
-    except:
-        
-
-
-def get_player_pos() -> tuple:
-	while True:
-        try:
-            initial = input("Enter new coordinates as floats in format 'x,y,z'")
-            final = tuple(float(x) for x in initial.split(","))
-            if (len(final) != 3):
-                print("Couldn't parse three coordinates")
-                continue
-            break
-		expect ValueError:
-            print("")
-    return final
-            
-
-def old() -> None:
-    print("=== Game Coordinate System ===\n")
-    pos_0 = (0, 0, 0)
-    x_0, y_0, z_0 = pos_0
-    pos_1 = (10, 20, 5)
-    x_1, y_1, z_1 = pos_1
-    distance_0 = math.sqrt((x_1 - x_0)**2 + (y_1 - y_0)**2 + (z_1 - z_0)**2)
-    print(f"Position created: {pos_1}")
-    print(f"Distance between {pos_0} and {pos_1}: {distance_0:.2f}\n")
-    pos_2_str = "3,4,0"
-    print(f"Parsing coordinates: \"{pos_2_str}\"")
-    pos_2_list = pos_2_str.split(",")
-    x_2, y_2, z_2 = 0, 0, 0
-    try:
-        pos_2 = tuple(int(coord) for coord in pos_2_list)
-        print(f"Parsed position: {pos_2}")
-        x_2, y_2, z_2 = pos_2
-        distance_1 = math.sqrt((x_2 - x_0)**2 + (y_2 - y_0)**2 +
-                               (z_2 - z_0)**2)
-        print(f"Distance between {pos_0} and {pos_2}: {distance_1}\n")
-    except ValueError as error:
-        print(f"Error parsing coordinates: {error}")
-        print(f"Error details - Type: {type(error).__name__}, "
-              f"Args: {error.args}")
-    invalid_str = "abc,def,ghi"
-    invalid_list = invalid_str.split(",")
-    print(f"Parsing invalid coordinates: \"{invalid_str}\"")
-    try:
-        pos_3 = tuple(int(coord) for coord in invalid_list)
-        print(f"Parsed position: {pos_3}")
-        x_3, y_3, z_3 = pos_3
-        distance_2 = math.sqrt((x_3 - x_0)**2 + (y_3 - y_0)**2 +
-                               (z_3 - z_0)**2)
-        print(f"Distance between {pos_0} and {pos_3}: {distance_2}")
-    except ValueError as error:
-        print(f"Error parsing coordinates: {error}")
-        print(f"Error details - Type: {type(error).__name__}, "
-              f"Args: {error.args}")
-    print("\nUnpacking demonstration:")
-    print(f"Player at x={x_2}, y={y_2}, z={z_2}")
-    print(f"Coordinates: X={x_2}, Y={y_2}, Z={z_2}")
+    first_0, first_1, first_2 = get_player_pos()
+    print(f"Got a first tuple: ({first_0}, {first_1}, {first_2})")
+    print(f"It includes: X={first_0}, Y={first_1}, Z={first_2}")
+    base = (0, 0, 0)
+    base_0, base_1, base_2 = base
+    distance_center = math.sqrt((first_0 - base_0)**2 +
+                                (first_1 - base_1)**2 + (first_2 + base_2)**2)
+    print(f"Distance to center: {distance_center}\n")
+    print("Get a second set of coordiantes")
+    second_0, second_1, second_2 = get_player_pos()
+    distance_points = math.sqrt((second_0 - base_0)**2 +
+                                (second_1 - base_1)**2 +
+                                (second_2 - base_2)**2)
+    print(f"Distance between the 2 sets of coordinates: {distance_points}")
 
 
 if __name__ == "__main__":

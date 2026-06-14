@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_command_quest.py                               :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/02/03 10:33:16 by laveerka        #+#    #+#               #
-#  Updated: 2026/02/12 11:11:34 by laveerka        ###   ########.fr        #
+#  Updated: 2026/06/10 04:29:36 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -17,9 +17,9 @@ def main() -> None:
     """Main to display arguments to program execution"""
     print("=== Command Quest ===")
     arg_count = len(sys.argv)
+    print(f"Program name: {sys.argv[0]}")
     if arg_count == 1:
         print("No arguments provided!")
-    print(f"Program name: {sys.argv[0]}")
     if arg_count > 1:
         print(f"Arguments received: {arg_count - 1}")
         iter = 1

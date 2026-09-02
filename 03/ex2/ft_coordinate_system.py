@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_coordinate_system.py                           :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/02/03 10:33:28 by laveerka        #+#    #+#               #
-#  Updated: 2026/06/14 04:07:43 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/02 14:06:02 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -46,13 +46,13 @@ def main() -> None:
     base_0, base_1, base_2 = base
     distance_center = math.sqrt((first_0 - base_0)**2 +
                                 (first_1 - base_1)**2 + (first_2 + base_2)**2)
-    print(f"Distance to center: {distance_center}\n")
-    print("Get a second set of coordiantes")
+    print(f"Distance to center: {distance_center:.4f}\n")
+    print("Get a second set of coordinates")
     second_0, second_1, second_2 = get_player_pos()
-    distance_points = math.sqrt((second_0 - base_0)**2 +
-                                (second_1 - base_1)**2 +
-                                (second_2 - base_2)**2)
-    print(f"Distance between the 2 sets of coordinates: {distance_points}")
+    distance_points = math.sqrt((second_0 - first_0)**2 +
+                                (second_1 - first_1)**2 +
+                                (second_2 - first_2)**2)
+    print(f"Distance between the 2 sets of coordinates: {distance_points:.4f}")
 
 
 if __name__ == "__main__":

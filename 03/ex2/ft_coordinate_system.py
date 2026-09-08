@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_coordinate_system.py                           :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/02/03 10:33:28 by laveerka        #+#    #+#               #
-#  Updated: 2026/09/02 14:06:02 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/08 15:47:20 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 

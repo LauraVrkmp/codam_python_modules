@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_analytics_dashboard.py                         :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/02/03 10:33:48 by laveerka        #+#    #+#               #
-#  Updated: 2026/02/03 10:33:50 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/08 15:50:13 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 

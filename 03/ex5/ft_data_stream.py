@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_data_stream.py                                 :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/02/03 10:33:44 by laveerka        #+#    #+#               #
-#  Updated: 2026/09/15 13:45:28 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/16 13:30:42 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -33,25 +33,19 @@ def consume_event(events: list[tuple[str, str]]) -> Generator[tuple[str, str],
         yield item
 
 
-def main():
+def main() -> None:
     print("=== Game Data Stream Processor ===")
     event = gen_event()
     for iter in range(1000):
-        try:
-            player, action = next(event)
-        except StopIteration:
-            break
+        player, action = next(event)
         print(f"Event {iter}: Player {player} did action {action}")
     events: list[tuple[str, str]] = []
     event = gen_event()
     for _ in range(10):
-        try:
-            events.append(next(event))
-        except StopIteration:
-            break
+        events.append(next(event))
     print(f"Built list of 10 events: {events}")
-    for event in consume_event(events):
-        print(f"Got event from list: {event}")
+    for ev in consume_event(events):
+        print(f"Got event from list: {ev}")
         print(f"Remains in list: {events}")
 
 

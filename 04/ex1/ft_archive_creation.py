@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_archive_creation.py                            :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/16 17:41:06 by laveerka        #+#    #+#               #
-#  Updated: 2026/09/20 16:10:08 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/21 16:11:39 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -53,7 +53,7 @@ def main():
         print("==== Cyber Archives Recovery ===")
         file_name = args[1]
         print(f"Accessing file '{file_name}'")
-        content = read_file(file_name)          
+        content = read_file(file_name)
         if content:
             tagged = transform_data(content)
             print(f"{tagged}")
@@ -62,5 +62,6 @@ def main():
     else:
         print("Usage: ft_ancient_text.py <file>")
 
-if __name__== "__main__":
+
+if __name__ == "__main__":
     main()

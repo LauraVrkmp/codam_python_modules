@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_ancient_text.py                                :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/16 17:40:59 by laveerka        #+#    #+#               #
-#  Updated: 2026/09/20 11:04:31 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/21 16:11:27 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -32,7 +32,7 @@ def main():
         print("==== Cyber Archives Recovery ===")
         file_name = args[1]
         print(f"Accessing file '{file_name}'")
-        read_file(file_name)            
+        read_file(file_name)
     else:
         print("Usage: ft_ancient_text.py <file>")
 

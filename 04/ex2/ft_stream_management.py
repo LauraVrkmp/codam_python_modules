@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/16 17:41:12 by laveerka        #+#    #+#               #
-#  Updated: 2026/09/21 16:05:58 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/21 16:11:49 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -53,7 +53,7 @@ def main():
         print("==== Cyber Archives Recovery ===")
         file_name = args[1]
         print(f"Accessing file '{file_name}'")
-        content = read_file(file_name)          
+        content = read_file(file_name)
         if content:
             tagged = transform_data(content)
             print(f"{tagged}")

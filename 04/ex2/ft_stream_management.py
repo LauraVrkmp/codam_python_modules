@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_stream_management.py                           :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/16 17:41:12 by laveerka        #+#    #+#               #
-#  Updated: 2026/09/20 16:13:53 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/21 16:05:58 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -62,5 +62,6 @@ def main():
     else:
         print("Usage: ft_ancient_text.py <file>")
 
-if __name__== "__main__":
+
+if __name__ == "__main__":
     main()

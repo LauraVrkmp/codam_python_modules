@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/16 17:41:12 by laveerka        #+#    #+#               #
-#  Updated: 2026/09/21 16:11:49 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/23 14:25:37 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -24,7 +24,8 @@ def read_file(file_name: str) -> str | None:
         print(f"File '{file_name}', closed.\n")
         return content
     except (FileNotFoundError, PermissionError) as e:
-        print(f"Error opening file '{file_name}': {e}")
+        print(f"[STDERR] Error opening file '{file_name}': {e}",
+              file=sys.stderr)
         return None
 
 
@@ -36,13 +37,22 @@ def transform_data(content: str) -> str:
 
 
 def save_data(tagged: str) -> None:
-    file_name = input("Enter new file name (or empty): ")
+    sys.stdout.write("Enter new file name (or empty): ")
+    sys.stdout.flush()
+    line = sys.stdin.readline()
+    if line.endswith("\n"):
+        line = line[:-1]
+    file_name = line
     if file_name:
         print(f"Saving data to '{file_name}'")
-        f = open(file_name, "w")
-        f.write(tagged)
-        f.close()
-        print(f"Data saved in file '{file_name}'")
+        try:
+            f = open(file_name, "w")
+            f.write(tagged)
+            f.close()
+            print(f"Data saved in file '{file_name}'")
+        except (PermissionError) as e:
+            print(f"[STDERR] Error opening file '{file_name}': {e}")
+            print("Data not saved.")
     else:
         print("Not saving data.")
 

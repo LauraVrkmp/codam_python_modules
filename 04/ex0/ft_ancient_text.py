@@ -6,14 +6,15 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/16 17:40:59 by laveerka        #+#    #+#               #
-#  Updated: 2026/09/21 16:11:27 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/24 12:04:23 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 import sys
 
 
-def read_file(file_name: str):
+def read_file(file_name: str) -> None:
+    """Reading and printing from file"""
     try:
         f = open(file_name, "r")
         print("---\n")
@@ -26,7 +27,8 @@ def read_file(file_name: str):
         print(f"Error opening file '{file_name}': {e}")
 
 
-def main():
+def main() -> None:
+    """Main to read file from command line"""
     args = sys.argv
     if len(args) == 2:
         print("==== Cyber Archives Recovery ===")

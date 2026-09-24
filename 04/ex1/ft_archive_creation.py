@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/16 17:41:06 by laveerka        #+#    #+#               #
-#  Updated: 2026/09/21 16:11:39 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/24 12:04:07 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -14,6 +14,7 @@ import sys
 
 
 def read_file(file_name: str) -> str | None:
+    """Reading and printing from file"""
     try:
         f = open(file_name, "r")
         print("---\n")
@@ -29,6 +30,7 @@ def read_file(file_name: str) -> str | None:
 
 
 def transform_data(content: str) -> str:
+    """Transforming by adding hash tag to lines"""
     print("Transform data:\n---\n")
     lines = content.split("\n")
     tagged = [line + "#" for line in lines]
@@ -36,6 +38,7 @@ def transform_data(content: str) -> str:
 
 
 def save_data(tagged: str) -> None:
+    """Writing to file provided on prompt"""
     file_name = input("Enter new file name (or empty): ")
     if file_name:
         print(f"Saving data to '{file_name}'")
@@ -47,7 +50,8 @@ def save_data(tagged: str) -> None:
         print("Not saving data.")
 
 
-def main():
+def main() -> None:
+    """Main to print, process and reprint file"""
     args = sys.argv
     if len(args) == 2:
         print("==== Cyber Archives Recovery ===")

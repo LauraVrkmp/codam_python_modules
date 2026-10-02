@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  data_processor.py                                 :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/24 13:37:37 by laveerka        #+#    #+#               #
-#  Updated: 2026/09/25 14:06:39 by laveerka        ###   ########.fr        #
+#  Updated: 2026/09/30 16:10:27 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -16,11 +16,14 @@ from abc import ABC, abstractmethod
 class DataProcessor(ABC):
 	@abstractmethod
 	def validate(self, data: Any) -> bool:
+		pass
 
 	@abstractmethod
 	def ingest(self, data: Any) -> None:
+		pass
 
 	def output(self) -> tuple[int, str]:
+		pass
 	
 
 

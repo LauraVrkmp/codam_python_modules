@@ -3,20 +3,21 @@
 #                                                      :::      ::::::::    #
 #  data_stream.py                                    :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/24 13:37:45 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/12 12:06:13 by laveerka        ###   ########.fr        #
+#  Updated: 2026/10/15 15:05:45 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 from abc import ABC, abstractmethod
 from typing import Any, Union, cast
 
+
 class DataProcessor(ABC):
     def __init__(self) -> None:
-        self._queue: list[str] = []
-        self._rank: int = 0
+        self.queue: list[str] = []
+        self.rank: int = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -27,20 +28,38 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
-        item = self._queue.pop(0)
-        rank = self._rank
-        self._rank += 1
+        item = self.queue.pop(0)
+        rank = self.rank
+        self.rank += 1
         return rank, item
 
 
-class DataStream(data):
+class DataStream:
+    def __init__(self) -> None:
+        self._processors: list[DataProcessor] = []
+
     def register_processor(self, proc: DataProcessor) -> None:
+        self._processors.append(proc)
 
     def process_stream(self, stream: list[Any]) -> None:
+        for item in stream:
+            for proc in self._processors:
+                if proc.validate(item):
+                    proc.ingest(item)
+                    break
+            else:
+                print(f"DataStream error - Can't process element in stream: {item}")
 
     def print_processors_stats(self) -> None:
-        
-        
+        print("== DataStream statistics ==")
+        if not self._processors:
+            print("No processor found, no data\n")
+            return
+        for proc in self._processors:
+            name = type(proc).__name__.replace("Processor", " Processor")
+            total = proc.rank + len(proc.queue)
+            print(f"{name}: total {total} items processed, remaining {len(proc.queue)} on processor")
+
 
 class NumericProcessor(DataProcessor):
     NumericData = Union[int, float, list[Union[int, float]]]
@@ -61,7 +80,7 @@ class NumericProcessor(DataProcessor):
         if not self.validate(data):
             raise ValueError("No valid numeric data")
         items = data if isinstance(data, list) else [data]
-        self._queue.extend(str(item) for item in items)
+        self.queue.extend(str(item) for item in items)
 
 
 class TextProcessor(DataProcessor):
@@ -79,7 +98,7 @@ class TextProcessor(DataProcessor):
         if not self.validate(data):
             raise ValueError("No valid tet data")
         items = data if isinstance(data, list) else [data]
-        self._queue.extend(items)
+        self.queue.extend(items)
 
 
 class LogProcessor(DataProcessor):
@@ -101,66 +120,40 @@ class LogProcessor(DataProcessor):
         if not self.validate(data):
             raise ValueError("No valid log data")
         items = data if isinstance(data, list) else [data]
-        self._queue.extend(": ".join(item.values()) for item in items)
-
-
-def numeric_processor() -> None:
-    print("Testing Numeric Processor...")
-    num_test: list[Any] = [42, "Hello"]
-    numeric = NumericProcessor()
-    for num in num_test:
-        print(f"Trying to validate input '{num}': {numeric.validate(num)}")
-    num_invalid: str = "foo"
-    print(f"Test invalid ingestion of string '{num_invalid}'"
-          f" without prior validation:")
-    try:
-        numeric.ingest(num_invalid)
-    except ValueError:
-        print("Got exception: Improper numeric data")
-    num_valid: list[Any] = [1, 2, 3, 4, 5]
-    print(f"Processing data: {num_valid}")
-    numeric.ingest(num_valid)
-    print("Extracting 3 values...")
-    for _ in range(3):
-        rank, value = numeric.output()
-        print(f"Numeric value: {rank}: {value}")
-
-
-def text_processor() -> None:
-    print("\nTesting Text Processor...")
-    text_invalid = 42
-    text_proc = TextProcessor()
-    print(f"Trying to validate input '{text_invalid}': "
-          f"{text_proc.validate(text_invalid)}")
-    text_data = ['Hello', 'Nexus', 'World']
-    print(f"Processing Data: {text_data}")
-    text_proc.ingest(text_data)
-    print("Extracting 1 value...")
-    rank, value = text_proc.output()
-    print(f"Text value {rank}: {value}")
-
-
-def log_processor() -> None:
-    print("\nTesting Log Processor...")
-    log_invalid = "Hello"
-    log_proc = LogProcessor()
-    print(f"Trying to validate input '{log_invalid}': "
-          f"{log_proc.validate(log_invalid)}")
-    log_data = [{'log_level': 'NOTICE', 'log_message': 'Connection to server'},
-                {'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'}]
-    print(f"Processing data: {log_data}")
-    log_proc.ingest(log_data)
-    print("Extracting 2 values...")
-    for _ in range(2):
-        rank, value = log_proc.output()
-        print(f"Log entry {rank}: {value}")
+        self.queue.extend(": ".join(item.values()) for item in items)
 
 
 def main() -> None:
-    print("=== Code Nexus - Data Processor ===\n")
-    numeric_processor()
-    text_processor()
-    log_processor()
+    print("=== Code Nexus - Data Stream ===\n")
+    print("Initialize Data Steam...")
+    stream = DataStream()
+    stream.print_processors_stats()
+    print("Registering Numeric Processor\n")
+    numeric = NumericProcessor()
+    stream.register_processor(numeric)
+    batch: list[Any] = ['Hello world', [3.14, -1, 2.71], [{'log_level':
+                        'WARNING', 'log message':
+                        'Telnet access! Use ssh instead'}, {'log_level': 'INFO', 'log_message':
+                        'User wil is connected'}], 42, ['Hi', 'five']]
+    print(f"Send first batch of data on stream: {batch}")
+    stream.process_stream(batch)
+    stream.print_processors_stats()
+    print("\nRegistering other data processors")
+    text = TextProcessor()
+    log = LogProcessor()
+    stream.register_processor(text)
+    stream.register_processor(log)
+    print("Send the same batch again")
+    stream.process_stream(batch)
+    stream.print_processors_stats()
+    print("\nConsume some elements from the data processors: Numeric 3, Text 2, Log 1")
+    for _ in range(3):
+        numeric.output()
+    for _ in range(2):
+        text.output()
+    for _ in range(1):
+        log.output
+    stream.print_processors_stats()
 
 
 if __name__ == "__main__":

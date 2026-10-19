@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  data_processor.py                                 :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/24 13:37:37 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/06 11:47:42 by laveerka        ###   ########.fr        #
+#  Updated: 2026/10/15 17:16:32 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -16,8 +16,8 @@ from typing import Any, Union, cast
 
 class DataProcessor(ABC):
     def __init__(self) -> None:
-        self._queue: list[str] = []
-        self._rank: int = 0
+        self.queue: list[str] = []
+        self.rank: int = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -28,9 +28,9 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
-        item = self._queue.pop(0)
-        rank = self._rank
-        self._rank += 1
+        item = self.queue.pop(0)
+        rank = self.rank
+        self.rank += 1
         return rank, item
 
 
@@ -53,7 +53,7 @@ class NumericProcessor(DataProcessor):
         if not self.validate(data):
             raise ValueError("No valid numeric data")
         items = data if isinstance(data, list) else [data]
-        self._queue.extend(str(item) for item in items)
+        self.queue.extend(str(item) for item in items)
 
 
 class TextProcessor(DataProcessor):
@@ -71,7 +71,7 @@ class TextProcessor(DataProcessor):
         if not self.validate(data):
             raise ValueError("No valid tet data")
         items = data if isinstance(data, list) else [data]
-        self._queue.extend(items)
+        self.queue.extend(items)
 
 
 class LogProcessor(DataProcessor):
@@ -93,7 +93,7 @@ class LogProcessor(DataProcessor):
         if not self.validate(data):
             raise ValueError("No valid log data")
         items = data if isinstance(data, list) else [data]
-        self._queue.extend(": ".join(item.values()) for item in items)
+        self.queue.extend(": ".join(item.values()) for item in items)
 
 
 def numeric_processor() -> None:

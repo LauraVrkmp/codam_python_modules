@@ -6,7 +6,7 @@
 #  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/24 13:37:37 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/15 17:16:32 by laveerka        ###   ########.fr        #
+#  Updated: 2026/10/20 23:14:20 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -15,18 +15,22 @@ from typing import Any, Union, cast
 
 
 class DataProcessor(ABC):
+    """Initialize a queue including rank"""
     def __init__(self) -> None:
         self.queue: list[str] = []
         self.rank: int = 0
 
+    """Pass the validation"""
     @abstractmethod
     def validate(self, data: Any) -> bool:
         pass
 
+    """Pass the ingestion"""
     @abstractmethod
     def ingest(self, data: Any) -> None:
         pass
 
+    """Return the rank and value of an item"""
     def output(self) -> tuple[int, str]:
         item = self.queue.pop(0)
         rank = self.rank
@@ -37,6 +41,7 @@ class DataProcessor(ABC):
 class NumericProcessor(DataProcessor):
     NumericData = Union[int, float, list[Union[int, float]]]
 
+    """Return a bool whether the data is an int or float, or list of such"""
     def validate(self, data: Any) -> bool:
         if isinstance(data, (int, float)) and not isinstance(data, bool):
             return True
@@ -49,6 +54,7 @@ class NumericProcessor(DataProcessor):
             )
         )
 
+    """Ingest data of the NumericData type"""
     def ingest(self, data: "NumericProcessor.NumericData") -> None:
         if not self.validate(data):
             raise ValueError("No valid numeric data")
@@ -59,6 +65,7 @@ class NumericProcessor(DataProcessor):
 class TextProcessor(DataProcessor):
     TextData = Union[str, list[str]]
 
+    """Return a bool wether the data is a string or list of such"""
     def validate(self, data: Any) -> bool:
         if isinstance(data, str):
             return True
@@ -67,6 +74,7 @@ class TextProcessor(DataProcessor):
             isinstance(item, str) for item in items
         )
 
+    """Ingest data of the TextData type"""
     def ingest(self, data: "TextProcessor.TextData") -> None:
         if not self.validate(data):
             raise ValueError("No valid tet data")
@@ -77,6 +85,7 @@ class TextProcessor(DataProcessor):
 class LogProcessor(DataProcessor):
     LogData = Union[dict[str, str], list[dict[str, str]]]
 
+    """Return a bool wether the data is a dictionary or list of such"""
     def validate(self, data: Any) -> bool:
         if isinstance(data, dict):
             items = cast("dict[Any, Any]", data)
@@ -84,11 +93,13 @@ class LogProcessor(DataProcessor):
                 isinstance(key, str) and isinstance(value, str)
                 for key, value in items.items()
             )
-        items: dict[Any, Any] = data
+        items_else: dict[Any, Any] = data
         return isinstance(data, list) and all(
-            isinstance(item, dict) and self.validate(item) for item in items
+            isinstance(item, dict) and self.validate(item)
+            for item in items_else
         )
 
+    """Ingest data of the LogData type"""
     def ingest(self, data: "LogProcessor.LogData") -> None:
         if not self.validate(data):
             raise ValueError("No valid log data")
@@ -97,6 +108,7 @@ class LogProcessor(DataProcessor):
 
 
 def numeric_processor() -> None:
+    """Process numeric data"""
     print("Testing Numeric Processor...")
     num_test: list[Any] = [42, "Hello"]
     numeric = NumericProcessor()
@@ -119,6 +131,7 @@ def numeric_processor() -> None:
 
 
 def text_processor() -> None:
+    """Process text data"""
     print("\nTesting Text Processor...")
     text_invalid = 42
     text_proc = TextProcessor()
@@ -133,6 +146,7 @@ def text_processor() -> None:
 
 
 def log_processor() -> None:
+    """Process log data (dictionary)"""
     print("\nTesting Log Processor...")
     log_invalid = "Hello"
     log_proc = LogProcessor()
@@ -149,6 +163,7 @@ def log_processor() -> None:
 
 
 def main() -> None:
+    """Main to call data processors"""
     print("=== Code Nexus - Data Processor ===\n")
     numeric_processor()
     text_processor()

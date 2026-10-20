@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_garden_management.py                           :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/01/31 16:34:06 by laveerka        #+#    #+#               #
-#  Updated: 2026/02/03 09:20:46 by laveerka        ###   ########.fr        #
+#  Updated: 2026/10/20 22:22:23 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 

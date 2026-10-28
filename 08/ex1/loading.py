@@ -6,7 +6,7 @@
 #  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 18:18:55 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/25 15:09:57 by laveerka        ###   ########.fr        #
+#  Updated: 2026/10/26 11:26:53 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -92,7 +92,7 @@ def check_dependencies() -> list[tuple[str, str]]:
                             present.append((package, clean_installed))
                         else:
                             version_count += 1
-                            wrong_version.append((package, clean_installed, required_version))
+                            wrong_version.append((package, required_version, clean_installed))
                     elif clean_installed:
                         present.append((package, clean_installed))
                 except PackageNotFoundError:
@@ -113,7 +113,7 @@ def check_dependencies() -> list[tuple[str, str]]:
             print(f"\nYou have {version_count} dependency which version is inadequate.")
         elif version_count > 1:
             print(f"\nYou have {version_count} dependencies which version is inadequate. ")
-        for package, installed, required_version in wrong_version:
+        for package, required_version, installed in wrong_version:
             print(f"- {package} has version {installed} installed, whereas it needs version {required_version}")
     if missing or wrong_version:
         print("\nTo satisfy the dependency requirements")
@@ -121,7 +121,7 @@ def check_dependencies() -> list[tuple[str, str]]:
         print("- run like so:           python loading.py")
         print("- install with poetry:   poetry install")
         print("- run like so:           poetry run python loading.py")
-        sys.exit()
+        sys.exit(1)
     return present
 
 
@@ -149,7 +149,7 @@ def import_modules(packages: list[tuple[str, str]]) -> dict[str, ModuleType]:
             print(f"Unable to import dependency {package} of version {installed}")
     if len(packages) != len(imported):
         print("\nMake sure to install all dependencies with either pip or poetry")
-        sys.exit()
+        sys.exit(1)
     return imported
 
 
@@ -203,13 +203,13 @@ def check_environment() -> None:
             print("- activate it with       source .venv/bin/activate # On Unix")
         elif "win" in sys.platform.lower():
             print("- activate it with       .venv\\Scripts\\activate # On Windows\n")
-        sys.exit()
+        sys.exit(1)
 
 
 def main() -> None:
     check_environment()
     packages: list[tuple[str, str]] = check_dependencies()
-    imported: dict[str, ModuleType ]= import_modules(packages)
+    imported: dict[str, ModuleType] = import_modules(packages)
     np = imported["numpy"]
     pd = imported["pandas"]
     plt = imported["matplotlib.pyplot"]

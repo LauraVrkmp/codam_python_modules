@@ -6,7 +6,7 @@
 #  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 18:19:50 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/26 18:24:02 by laveerka        ###   ########.fr        #
+#  Updated: 2026/10/29 09:39:57 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -35,13 +35,13 @@ def check_requirements() -> dict[str, str | None]:
     lines = read_file(file)
     if lines:
         for line in lines:
-            print(f"Line: {line}")
-            line = line.strip()
-            if ">=" in line:
+            if not line.strip():
+                continue
+            elif ">=" in line:
                 package, required_version = line.split(">=", 1)
                 requirements[package.strip()] = required_version.strip()
             else:
-                requirements[line.strip()] = None
+                requirements[line] = None
     return requirements
 
 
@@ -143,19 +143,21 @@ def import_modules(packages: list[tuple[str, str]]) -> dict[str, ModuleType]:
 
 def check_files(example_file: str, env_file: str, git_ignore: str) -> None:
     if not os.path.exists(example_file):
-        print(f"The file {example_file} doesn't exist")
-        print("Please create this file with the environmenal")
-        print("variables necessary to run this program")
+        print(f"The file {example_file} doesn't exist.")
+        print("Please create it and specify the environment")
+        print("variables necessary to run this program.")
         sys.exit(1)
     elif not os.path.exists(env_file):
-        print(f"The file {env_file} doesn't exist")
-        print(f"Create it with: cp {example_file} {env_file}")
-        print("and populate the file with values for the environment")
-        print("variables required to run this program")
+        print(f"The file {env_file} doesn't exist.\n")
+        print(f"Create it with: 'cp {example_file} {env_file}',")
+        print("populate it with values for the environment")
+        print("variables required to run this program,")
+        print("or specify the values on the command line.")
         exit(1)
     elif not os.path.exists(git_ignore):
-        print(f"The file {git_ignore} doesn't exist")
-        print(f"Create it and specify {env_file} is excluded from Git")
+        print(f"The file {git_ignore} doesn't exist.")
+        print(f"Create it and include {env_file}")
+        print("so that it is excluded from the repository.")
         exit(1)
 
 
@@ -166,6 +168,7 @@ def read_format(example_file: str) -> list[str] | None:
         variables: list[tuple[str, int]] = []
         for line_number, line in enumerate(file):
             add_line = True
+            line_number += 1
             if not line.strip():
                 continue
             if not line.endswith("="):
@@ -176,11 +179,20 @@ def read_format(example_file: str) -> list[str] | None:
                 name = line[:-1]
             words = name.split("_")
             if any(not word for word in words):
-                errors.append(f"Line {line_number} is incorrectly  split by underscores")
+                errors.append(f"Line {line_number} is incorrectly split by underscores")
                 add_line = False
-            if any(not word.isascii() or not word.isalpha() or not word.isupper() for word in words):
+            add_error = False
+            for word in words:
+                if word != "":
+                    for ch in word:
+                        if not ch.isalpha() or not ch.isupper():
+                            add_error = True
+                            break
+                if add_error:
+                    break
+            if add_error:
+                add_line = False
                 errors.append(f"Line {line_number} contains invalid characters")
-                add_line = False
             existing = next(((entry_name, entry_line) for entry_name, entry_line in
                 variables if entry_name == name),
                 None
@@ -192,12 +204,12 @@ def read_format(example_file: str) -> list[str] | None:
                 variables.append((name, line_number))
         if not variables:
             raise ValueError(
-                f"The file {example_file} does not contain valid variables"
+                f"The file {example_file} does not contain valid variables."
             )
         else:
             if errors:
                 raise ValueError(
-                    "Invalid .env.example file" + "\n- ".join(errors)
+                    "Invalid .env.example file\n- " + "\n- ".join(errors)
                 )
             format: list[str] = []
             for name, line_number in variables:
@@ -209,40 +221,90 @@ def read_format(example_file: str) -> list[str] | None:
         return None
 
 
-# def load_config(required: list[str]) -> dict[str, str]:
-#     load_dotenv()
-#     configuration = {
-#         name: os.environ.get(name, "")
-#         for name in required
-#     }
+def read_env(env_file: str) -> list[tuple[str, str | None]] | None:
+    specified: list[tuple[str, str | None]] = []
+    file = read_file(env_file)
+    if file:
+        for line in file:
+            variable, value = line.split("=")
+            if variable and value:
+                specified.append((variable, value))
+            elif variable:
+                specified.append((variable, None))
+    if len(specified) > 0:
+        return specified
+    else:
+        return None
+
+
+def load_config(dotenv: ModuleType, format: list[str], env_values: list[tuple[str, str | None]]) -> dict[str, str]:
+    from dotenv import load_dotenv
+    cli_vars = {
+        key: os.environ[key]
+        for key in format
+        if key in os.environ
+    }
+    file_vars = {
+        key: value
+        for key, value in env_values
+        if key in format and value is not None
+    }
+    load_dotenv(".env", override=False)
+    missing = [
+        key for key in format
+        if not os.environ.get(key)
+    ]
+    if missing:
+        raise RuntimeError(
+            f"There are missing environmental variables: "
+            f"{', '.join(missing)}"
+        )
+    else:
+        combined = file_vars | cli_vars
+        return combined
+
+
+def read_matrix(configuration: dict[str, str]) -> None:
+    print("\nORACLE STATUS: Reading the Matrix...")
+    print("Configuration loaded:")
+    print(f"Mode: {configuration["MATRIX_MODE"]}")
+    print(f"Database: {configuration{"DATABASE_URL"}}")
+    if configuration["API_KEY"]:
+        print(f"")
+    print(f"API Access: {configuration["API_KEY"]}")
+    print(f"Log Level: {configuration["LOG_LEVEL"]}")
+    print(f"Zion Network: {configuration["ZION_ENDPOINT"]}\n")
+
+
+def security_check(configuration: dict[str, str], config_format: list[str], env_values: list[tuple[str, str | None]] | None) -> None:
+    print("Environment security check:")
+    if configuration["API_KEY"]:
 
 
 
 def main() -> None:
     requirements: dict[str, str | None] = check_requirements()
-    print(f"Requirements: {requirements}")
     present = check_dependencies(requirements)
-    print(f"Present dependancies: {present}")
     imported = import_modules(present)
-    print(f"Imported dependencies: {imported}")
     dotenv = imported["dotenv"]
     example_file = ".env.example"
     env_file = ".env"
     git_ignore = ".gitignore"
     check_files(example_file, env_file, git_ignore)
     try:
-        config_format = read_format(example_file)
+        config_format: list[str] | None = read_format(example_file)
+        env_values: list[tuple[str, str | None]] | None = read_env(env_file)
     except ValueError as e:
         print(e)
-    print("here")
-    required = (
-        "MATRIX_MODE",
-        "DATABASE_URL",
-        "API_KEY",
-        "LOG_LEVEL",
-        "ZION_ENDPOINT",
-    )
-    configuration = load_config(required)
+        sys.exit(1)
+    if config_format and env_values:
+        try:
+            configuration = load_config(dotenv, config_format, env_values)
+        except RuntimeError as e:
+            print(e)
+            sys.exit(1)
+        read_matrix(configuration)
+        security_check(configuration, config_format, env_values)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/09/24 13:37:45 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/30 12:15:29 by laveerka        ###   ########.fr        #
+#  Updated: 2026/10/30 13:23:02 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -36,14 +36,14 @@ class DataProcessor(ABC):
 
 class DataStream:
     def __init__(self) -> None:
-        self._processors: list[DataProcessor] = []
+        self.processors: list[DataProcessor] = []
 
     def register_processor(self, proc: DataProcessor) -> None:
-        self._processors.append(proc)
+        self.processors.append(proc)
 
     def process_stream(self, stream: list[Any]) -> None:
         for item in stream:
-            for proc in self._processors:
+            for proc in self.processors:
                 if proc.validate(item):
                     proc.ingest(item)
                     break
@@ -53,10 +53,10 @@ class DataStream:
 
     def print_processors_stats(self) -> None:
         print("== DataStream statistics ==")
-        if not self._processors:
+        if not self.processors:
             print("No processor found, no data\n")
             return
-        for proc in self._processors:
+        for proc in self.processors:
             name = type(proc).__name__.replace("Processor", " Processor")
             total = proc.rank + len(proc.queue)
             print(f"{name}: total {total} items processed, "

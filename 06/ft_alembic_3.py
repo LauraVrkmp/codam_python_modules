@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_alembic_3.py                                   :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/20 23:41:31 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/21 02:43:23 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/02 16:15:26 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -14,7 +14,7 @@ from alchemy.elements import create_air
 
 
 def main() -> None:
-    """Main to import air creating function"""
+    """Main to call create air function specifically imported"""
     print("=== Alembic 3 ===")
     print("Accessing alchemy/elements.py using 'from ... import ...' "
           "structure")

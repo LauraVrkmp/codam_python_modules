@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_distillation_1.py                              :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/20 23:42:15 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/21 02:54:29 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/02 16:25:31 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -17,7 +17,7 @@ def main() -> None:
     """Main to import strength and healing potion brew functions"""
     print("=== Distillation 1 ===")
     print("Using: 'import alchemy' structure to access potions")
-    print(f"Testing strenght_potion: {alchemy.strength_potion()}")
+    print(f"Testing strength_potion: {alchemy.strength_potion()}")
     print(f"Testing heal alias: {alchemy.heal()}")
 
 

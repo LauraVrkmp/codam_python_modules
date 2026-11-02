@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  ft_alembic_4.py                                   :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/20 23:41:39 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/21 02:52:18 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/02 16:16:50 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -15,7 +15,7 @@ import traceback
 
 
 def main() -> None:
-    """Main to import air vs. earth creating functions"""
+    """Main to create air from general import. create earth not available"""
     print("=== Alembic 5 ===")
     print("Accessing the alchemy module using 'import alchemy'")
     print(f"Testing create_air: {alchemy.create_air()}")

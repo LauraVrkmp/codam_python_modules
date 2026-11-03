@@ -3,16 +3,16 @@
 #                                                      :::      ::::::::    #
 #  recipes.py                                        :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/20 23:40:35 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/21 02:39:50 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/03 13:57:49 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 from ..elements import create_air
-from alchemy.potions import strength_potion
 from elements import create_fire  # type: ignore
+from alchemy.potions import strength_potion
 
 
 def lead_to_gold() -> str:

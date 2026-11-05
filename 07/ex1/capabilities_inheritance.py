@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  capabilities_inheritance.py                       :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 05:39:53 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/05 14:26:54 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/05 15:40:29 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -42,13 +42,14 @@ class Bloomelle(Creature, HealCapability):
 
 class Shiftling(Creature, TransformCapability):
     def __init__(self) -> None:
-        super().__init__("Shiftling", "Normal", "attacks normally")
+        Creature.__init__(self, "Shiftling", "Normal", "attacks normally")
+        TransformCapability.__init__(self)
 
     def attack(self, attack_style: str | None = None) -> str:
         if self.transformed:
             return f"{self.name} performs a boosted strike!"
         else:
-            return f"{self.name} {attack_style}."
+            return f"{self.name} {self.attack_style}."
 
     def transform(self) -> str:
         self.transformed = True
@@ -61,13 +62,15 @@ class Shiftling(Creature, TransformCapability):
 
 class Morphagon(Creature, TransformCapability):
     def __init__(self) -> None:
-        super().__init__("Morphagon", "Normal/Dragon", "attacks normally")
+        Creature.__init__(self, "Morphagon", "Normal/Dragon",
+                          "attacks normally")
+        TransformCapability.__init__(self)
 
     def attack(self, attack_style: str | None = None) -> str:
         if self.transformed:
             return f"{self.name} unleashes a devastating morph strike!"
         else:
-            return f"{self.name} {attack_style}."
+            return f"{self.name} {self.attack_style}."
 
     def transform(self) -> str:
         self.transformed = True

@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  capacitor.py                                      :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 03:21:21 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/21 11:47:48 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/05 14:13:57 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -24,9 +24,9 @@ def healing() -> None:
     ):
         print(f"  {label}:")
         print(creature.describe())
-        print(f"{creature.attack()}!")
+        print(f"{creature.attack()}")
         if isinstance(creature, HealCapability):
-            print(creature.heal())
+            print(creature.heal(None))
 
 
 def transform() -> None:
@@ -38,7 +38,7 @@ def transform() -> None:
     ):
         print(f"  {label}:")
         print(creature.describe())
-        print(f"{creature.attack()}.")
+        print(f"{creature.attack()}")
         if isinstance(creature, TransformCapability):
             print(creature.transform())
             print(creature.attack())

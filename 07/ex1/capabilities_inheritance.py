@@ -3,14 +3,14 @@
 #                                                      :::      ::::::::    #
 #  capabilities_inheritance.py                       :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 05:39:53 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/21 15:52:17 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/05 14:26:54 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
-from ex0 import Creature
+from ex0.creature_class import Creature
 from .capabilities import HealCapability, TransformCapability
 
 
@@ -21,11 +21,10 @@ class Sproutling(Creature, HealCapability):
     def attack(self, attack_style: str | None = None) -> str:
         return super().attack(attack_style)
 
-    def heal(self, target: Creature | None = None) -> str:
-        if self.name == "Sproutling":
-            return f"{self.name} heals itself for a small amount"
-        else:
-            return f"{self.name} heals itself and others for a large amount"
+    def heal(self, target: str | None = None) -> str:
+        if target:
+            return f"{self.name} heals {target} for a small amount"
+        return f"{self.name} heals itself for a small amount"
 
 
 class Bloomelle(Creature, HealCapability):
@@ -35,54 +34,45 @@ class Bloomelle(Creature, HealCapability):
     def attack(self, attack_style: str | None = None) -> str:
         return super().attack(attack_style)
 
-    def heal(self, target: Creature | None = None) -> str:
-        if self.name == "Sproutling":
-            return f"{self.name} heals itself for a small amount"
-        else:
-            return f"{self.name} heals itself and others for a large amount"
+    def heal(self, target: str | None = None) -> str:
+        if target:
+            return f"{self.name} heals {target} and others for a large amount"
+        return f"{self.name} heals itself and others for a large amount"
 
 
 class Shiftling(Creature, TransformCapability):
     def __init__(self) -> None:
         super().__init__("Shiftling", "Normal", "attacks normally")
-        self.turn = False
 
     def attack(self, attack_style: str | None = None) -> str:
-        if self.turn:
+        if self.transformed:
             return f"{self.name} performs a boosted strike!"
-        elif self.attack_style == "attacks normally":
-            return f"{self.name} attacks normally."
         else:
-            return super().attack(attack_style)
+            return f"{self.name} {attack_style}."
 
     def transform(self) -> str:
-        self.turn = True
-        if self.name == "Shiftling":
-            return f"{self.name} shifts into a sharper form!"
-        return f"{self.name} morphs into a dragonic battle form!"
+        self.transformed = True
+        return f"{self.name} shifts into a sharper form!"
 
     def revert(self) -> str:
+        self.transformed = False
         return f"{self.name} returns to normal."
 
 
 class Morphagon(Creature, TransformCapability):
     def __init__(self) -> None:
         super().__init__("Morphagon", "Normal/Dragon", "attacks normally")
-        self.turn = False
 
     def attack(self, attack_style: str | None = None) -> str:
-        if self.turn:
+        if self.transformed:
             return f"{self.name} unleashes a devastating morph strike!"
-        elif self.attack_style == "attacks normally":
-            return f"{self.name} attacks normally."
         else:
-            return super().attack(attack_style)
+            return f"{self.name} {attack_style}."
 
     def transform(self) -> str:
-        if self.name == "Shiftling":
-            return f"{self.name} shifts into a sharper form!"
-        else:
-            return f"{self.name} morphs into a dragonic battle form!"
+        self.transformed = True
+        return f"{self.name} morphs into a dragonic battle form!"
 
     def revert(self) -> str:
+        self.transformed = False
         return f"{self.name} stabilizes its form."

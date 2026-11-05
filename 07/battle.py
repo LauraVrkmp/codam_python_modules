@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  battle.py                                         :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 03:21:00 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/21 11:46:15 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/05 11:32:55 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -27,8 +27,8 @@ def test_factory(players: list[CreatureFactory]) -> None:
 def test_battle(players: list[CreatureFactory]) -> None:
     print("Testing battle")
     creatures = [
-        player.create_base() if i == 0 else player.create_evolved()
-        for i, player in enumerate(players)
+        player.create_base()
+        for player in players
     ]
     print("\n  vs.\n".join(creature.describe() for creature in
                            creatures) + "\n  fight!")

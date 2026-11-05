@@ -3,14 +3,15 @@
 #                                                      :::      ::::::::    #
 #  heal_transform_creature_factory.py                :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 07:04:41 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/21 13:00:13 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/05 11:51:16 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
-from ex0 import Creature, CreatureFactory
+from ex0.creature_class import Creature
+from ex0.creature_factory import CreatureFactory
 from ex1.capabilities_inheritance import Sproutling, Bloomelle
 from ex1.capabilities_inheritance import Shiftling, Morphagon
 

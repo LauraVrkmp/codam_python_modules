@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  creature_inheritance.py                           :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 03:45:30 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/21 17:34:17 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/05 11:27:16 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 

@@ -3,24 +3,26 @@
 #                                                      :::      ::::::::    #
 #  capabilities.py                                   :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 05:38:11 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/21 12:59:37 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/05 13:55:37 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 from abc import ABC, abstractmethod
-from ex0 import Creature
 
 
 class HealCapability(ABC):
     @abstractmethod
-    def heal(self, target: Creature | None = None) -> str:
+    def heal(self, target: str | None = None) -> str:
         ...
 
 
 class TransformCapability(ABC):
+    def __init__(self) -> None:
+        self.transformed: bool = False
+
     @abstractmethod
     def transform(self) -> str:
         ...

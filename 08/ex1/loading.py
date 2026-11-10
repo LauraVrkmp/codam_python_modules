@@ -6,7 +6,7 @@
 #  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 18:18:55 by laveerka        #+#    #+#               #
-#  Updated: 2026/10/26 11:26:53 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/07 02:03:50 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -62,11 +62,11 @@ def check_requirements() -> dict[str, str | None] | None:
                     if version_string:
                         requirements[package.strip()] = version_string
                     else:
-                        requirements[package.strip()] = "no_info"
+                        requirements[package.strip()] = None
                 elif package and not required_version:
-                    requirements[package.strip()] = "no_info"
+                    requirements[package.strip()] = None
             elif line:
-                requirements[line] = "no_info"
+                requirements[line] = None
     if requirements:
         return requirements
     else:
@@ -76,7 +76,7 @@ def check_requirements() -> dict[str, str | None] | None:
 def check_dependencies() -> list[tuple[str, str]]:
     required: dict[str, str | None] | None =  check_requirements()
     missing: list[tuple[str, str | None]] = []
-    wrong_version: list[tuple[str, str | None, str]] = []
+    wrong_version: list[tuple[str, str, str]] = []
     present: list[tuple[str, str]] = []
     missing_count = 0
     version_count = 0
@@ -87,7 +87,7 @@ def check_dependencies() -> list[tuple[str, str]]:
                     installed_version = version(package)
                     clean_installed = build_version_string(installed_version)
                     if required_version and clean_installed:
-                        comparison = compare_versions(required_version, installed_version)
+                        comparison = compare_versions(required_version, clean_installed)
                         if comparison:
                             present.append((package, clean_installed))
                         else:
@@ -97,12 +97,12 @@ def check_dependencies() -> list[tuple[str, str]]:
                         present.append((package, clean_installed))
                 except PackageNotFoundError:
                     missing_count += 1
-                    missing.append((package,required_version))
+                    missing.append((package, required_version))
     if missing:
         if missing_count == 1:
-            print(f"\nYou have {missing_count} missing dependency.")
+            print(f"\nYou have {missing_count} missing dependency")
         elif missing_count > 1:
-            print(f"\nYou have {missing_count} missing dependendies.")
+            print(f"\nYou have {missing_count} missing dependendies")
         for package, required_version in missing:
             if required_version:
                 print(f"- {package} version {required_version} is missing")
@@ -110,17 +110,30 @@ def check_dependencies() -> list[tuple[str, str]]:
                 print(f"- {package} is missing, no required version is specified")
     if wrong_version:
         if version_count == 1:
-            print(f"\nYou have {version_count} dependency which version is inadequate.")
+            print(f"\nYou have {version_count} dependency which version is inadequate")
         elif version_count > 1:
-            print(f"\nYou have {version_count} dependencies which version is inadequate. ")
+            print(f"\nYou have {version_count} dependencies which version is inadequate")
         for package, required_version, installed in wrong_version:
             print(f"- {package} has version {installed} installed, whereas it needs version {required_version}")
     if missing or wrong_version:
         print("\nTo satisfy the dependency requirements")
-        print("- install with pip:      python -m pip install -r requirements.txt")
-        print("- run like so:           python loading.py")
-        print("- install with poetry:   poetry install")
-        print("- run like so:           poetry run python loading.py")
+        print("\n* with pip\n")
+        print("  create the virtual environment")
+        print("   - python3 -m venv matrix_env")
+        print("  activate it with")
+        if "linux" in sys.platform.lower():
+            print("   - source matrix_env/bin/activate")
+        elif "win" in sys.platform.lower():
+            print("   - matrix_env\\Scripts\\activate\n")
+        print("  install requirements")
+        print("   - pip install -r requirements.txt")
+        print("  run the code")
+        print("   - python3 loading.py")
+        print("\n* with poetry\n")
+        print("  install requirements")
+        print("   - poetry install")
+        print("  run the code")
+        print("   - poetry run python3 loading.py")
         sys.exit(1)
     return present
 
@@ -163,6 +176,7 @@ def generate_data(np: ModuleType, data_points: int) -> Any:
 
 
 def data_manipulation(pd: ModuleType, data: Any) -> Any:
+    print("\nAnalyzing Matrix data...")
     print(f"Processing {data.shape[0]} data points...")
     df = pd.DataFrame(
         data,
@@ -193,21 +207,7 @@ def create_visualization(plt: ModuleType, df: Any, filename: str) -> None:
     plt.close(fig)
 
 
-def check_environment() -> None:
-    if sys.prefix != sys.base_prefix:
-        return
-    else:
-        print("\nThe virtual environment is not active.")
-        print("- create it with         python -m venv .venv")
-        if "linux" in sys.platform.lower():
-            print("- activate it with       source .venv/bin/activate # On Unix")
-        elif "win" in sys.platform.lower():
-            print("- activate it with       .venv\\Scripts\\activate # On Windows\n")
-        sys.exit(1)
-
-
 def main() -> None:
-    check_environment()
     packages: list[tuple[str, str]] = check_dependencies()
     imported: dict[str, ModuleType] = import_modules(packages)
     np = imported["numpy"]

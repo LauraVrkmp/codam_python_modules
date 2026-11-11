@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  loading.py                                        :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 18:18:55 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/07 02:03:50 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/11 13:49:39 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -18,7 +18,7 @@ from importlib.metadata import version, PackageNotFoundError
 
 
 def build_version_string(version_info: str | None) -> str | None:
-    version_string  = ""
+    version_string = ""
     digit = False
     dot = False
     if version_info:

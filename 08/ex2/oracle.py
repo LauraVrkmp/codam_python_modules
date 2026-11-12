@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/11/11 09:31:21 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/11 15:33:27 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/12 13:50:58 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -14,7 +14,8 @@ import os
 import sys
 
 
-def check_files(git_ignore: str, example_file: str, environment_file: str) -> None:
+def check_files(git_ignore: str, example_file: str,
+                environment_file: str) -> None:
     if not os.path.exists(git_ignore):
         print(f"The file {git_ignore} doesn't exist.")
         print(f"Create it and add {environment_file}")
@@ -34,13 +35,13 @@ def check_files(git_ignore: str, example_file: str, environment_file: str) -> No
         sys.exit(1)
 
 
-def load_environment() -> object:
+def load_environment() -> None:
     if sys.prefix != sys.base_prefix:
         try:
             from dotenv import load_dotenv  # type: ignore
             load_dotenv(override=False)
         except ImportError:
-            print(f"python-dotenv is not installed")
+            print("python-dotenv is not installed")
             print("Install it with:")
             print("-   pip install python-dotenv")
             sys.exit(1)
@@ -64,7 +65,7 @@ def mode_config(mode: str | None) -> bool:
         print("Mode is defined but empty")
     elif mode.lower() == "development" or mode.lower() == "production":
         valid = True
-        print(f"Mode : {mode}")
+        print(f"Mode: {mode}")
     else:
         print("Mode has an invalid value")
     return valid
@@ -104,7 +105,9 @@ def log_config(log: str | None) -> bool:
         print("Log level is not defined")
     elif log == "":
         print("Log level is defined but empty")
-    elif log == "INFORMATION" or log == "DEBUG" or log == "WARNING":
+    elif log == "TRACE" or log == "DEBUG" or log == "INFO" \
+        or log == "WARN" or log == "WARNING" or log == "ERROR" \
+            or log == "CRITICAL" or log == "FATAL":
         valid = True
         print(f"Log Level: {log}")
     else:
@@ -126,11 +129,11 @@ def endpoint_config(endpoint: str | None) -> bool:
     return valid
 
 
-def print_configuration() -> list[str]:
+def print_configuration() -> bool:
     print("Configuration loaded:")
     MODE = os.getenv("MATRIX_MODE")
     valid_mode = mode_config(MODE)
-    URL = os.getenv("DATABARE_URL")
+    URL = os.getenv("DATABASE_URL")
     valid_url = url_config(URL)
     API = os.getenv("API_KEY")
     valid_api = api_config(API)
@@ -139,24 +142,30 @@ def print_configuration() -> list[str]:
     ENDPOINT = os.getenv("ZION_ENDPOINT")
     valid_end = endpoint_config(ENDPOINT)
     if valid_mode and valid_url and valid_api and valid_log and valid_end:
-        valid_conf = "True"
+        return True
     else:
-        valid_conf = "False"
-    return 
+        return False
 
 
-def security_check(MODE: str | None, URL: str | None, API: str | None, LOG: str | None, ENDPOINT: str | None, valid_conf: str):
+def security_check(valid_conf: bool):
     print("\nEnvironment security check:")
+    API = os.getenv("API_KEY")
     if API and "secret" in API:
         print("[ERROR] Hardcoded secret detected")
     else:
         print("[OK] No hardcoded secrets detected")
-    if not valid_conf:
-        print("[ERROR] .env file not properly configured")
-    else:
+    if valid_conf:
         print("[OK] .env file properly configured")
-    if 
-
+    else:
+        print("[ERROR] .env file not properly configured")
+    from dotenv import dotenv_values  # type: ignore
+    env_file_values = dotenv_values(".env")  # type: ignore
+    for key, env_value in env_file_values.items():  # type: ignore
+        if key in os.environ:
+            if os.environ[key] != env_value:
+                print("[OK] Production overrides available")
+                return
+    print("[OK] No production overrides available")
 
 
 def main() -> None:
@@ -166,8 +175,8 @@ def main() -> None:
     environment_file = ".env"
     check_files(git_ignore, example_file, environment_file)
     load_environment()
-    MODE, URL, API, LOG, ENDPOINT, valid_conf = print_configuration()
-    security_check(MODE, URL, API, LOG, ENDPOINT, valid_conf)
+    valid_conf = print_configuration()
+    security_check(valid_conf)
     print("\nThe Oracle sees all configurations.")
 
 

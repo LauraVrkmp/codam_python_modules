@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 18:18:55 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/11 13:49:39 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/12 13:54:42 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -25,7 +25,7 @@ def build_version_string(version_info: str | None) -> str | None:
         for char in version_info:
             if char.isdigit() and not dot:
                 digit = True
-                version_string +=  char
+                version_string += char
             elif char.isdigit() and dot:
                 digit = True
                 dot = False
@@ -47,11 +47,11 @@ def compare_versions(required_version: str, installed_version: str) -> bool:
     length = max(len(required), len(clean))
     required = required + (0,) * (length - len(required))
     clean = clean + (0,) * (length - len(clean))
-    return clean >= required  
+    return clean >= required
 
 
 def check_requirements() -> dict[str, str | None] | None:
-    requirements: dict[str, str | None] | None = {}
+    requirements: dict[str, str | None] = {}
     with open("requirements.txt", "r", encoding="utf-8") as file:
         for line in file:
             line = line.strip()
@@ -74,7 +74,7 @@ def check_requirements() -> dict[str, str | None] | None:
 
 
 def check_dependencies() -> list[tuple[str, str]]:
-    required: dict[str, str | None] | None =  check_requirements()
+    required: dict[str, str | None] | None = check_requirements()
     missing: list[tuple[str, str | None]] = []
     wrong_version: list[tuple[str, str, str]] = []
     present: list[tuple[str, str]] = []
@@ -87,12 +87,14 @@ def check_dependencies() -> list[tuple[str, str]]:
                     installed_version = version(package)
                     clean_installed = build_version_string(installed_version)
                     if required_version and clean_installed:
-                        comparison = compare_versions(required_version, clean_installed)
+                        comparison = compare_versions(required_version,
+                                                      clean_installed)
                         if comparison:
                             present.append((package, clean_installed))
                         else:
                             version_count += 1
-                            wrong_version.append((package, required_version, clean_installed))
+                            wrong_version.append((package, required_version,
+                                                  clean_installed))
                     elif clean_installed:
                         present.append((package, clean_installed))
                 except PackageNotFoundError:
@@ -107,14 +109,18 @@ def check_dependencies() -> list[tuple[str, str]]:
             if required_version:
                 print(f"- {package} version {required_version} is missing")
             else:
-                print(f"- {package} is missing, no required version is specified")
+                print(f"- {package} is missing, no required version "
+                      "is specified")
     if wrong_version:
         if version_count == 1:
-            print(f"\nYou have {version_count} dependency which version is inadequate")
+            print(f"\nYou have {version_count} dependency which version is "
+                  "inadequate")
         elif version_count > 1:
-            print(f"\nYou have {version_count} dependencies which version is inadequate")
+            print(f"\nYou have {version_count} dependencies which version is "
+                  "inadequate")
         for package, required_version, installed in wrong_version:
-            print(f"- {package} has version {installed} installed, whereas it needs version {required_version}")
+            print(f"- {package} has version {installed} installed, whereas it "
+                  f"needs version {required_version}")
     if missing or wrong_version:
         print("\nTo satisfy the dependency requirements")
         print("\n* with pip\n")
@@ -159,9 +165,11 @@ def import_modules(packages: list[tuple[str, str]]) -> dict[str, ModuleType]:
             module = import_module(package)
             imported[package] = module
         except ImportError:
-            print(f"Unable to import dependency {package} of version {installed}")
+            print(f"Unable to import dependency {package} of "
+                  f"version {installed}")
     if len(packages) != len(imported):
-        print("\nMake sure to install all dependencies with either pip or poetry")
+        print("\nMake sure to install all dependencies with either "
+              "pip or poetry")
         sys.exit(1)
     return imported
 
@@ -188,8 +196,8 @@ def data_manipulation(pd: ModuleType, data: Any) -> Any:
 def create_visualization(plt: ModuleType, df: Any, filename: str) -> None:
     print("Generating visualization...\n")
     fig: Any = plt.figure(figsize=(10, 7))
-    ax: Any = fig.add_subplot(111, projection="3d") # type: ignore[reportUnknownMemberType]
-    scatter = ax.scatter( # type: ignore[reportUnknownMemberType]
+    ax: Any = fig.add_subplot(111, projection="3d")  # type: ignore
+    scatter = ax.scatter(  # type: ignore
         df["size_m2"],
         df["age_years"],
         df["price"],
@@ -213,7 +221,8 @@ def main() -> None:
     np = imported["numpy"]
     pd = imported["pandas"]
     plt = imported["matplotlib.pyplot"]
-    if packages and all(package and installed for package, installed in packages):
+    if packages and all(package and installed for package,
+                        installed in packages):
         print("\nLOADING STATUS: Loading programs...\n")
         dependency_info(packages)
         filename = "matrix_analysis.png"

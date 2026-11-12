@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  construct.py                                      :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/10/21 18:18:29 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/07 01:50:00 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/12 13:59:37 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -27,7 +27,6 @@ def virtual() -> None:
     print("Package installation path:")
     print(f"{site.getsitepackages()[0]}")
 
-    
 
 def non_virtual() -> None:
     """Function to print information on the system environment"""
@@ -37,9 +36,11 @@ def non_virtual() -> None:
     print("WARNING: You're in the global environment!")
     print("The machines can see everything you install.\n")
     print("To enter the construct, run:")
-    print("python3 -m venv matrix_env")
-    print("source matrix_env/bin/activate # On Unix")
-    print("matrix_env\\Scripts\\activate # On Windows\n")
+    print(" - python3 -m venv matrix_env")
+    if "linux" in sys.platform.lower():
+        print(" - source matrix_env/bin/activate")
+    elif "win" in sys.platform.lower():
+        print(" - matrix_env\\Scripts\\activate\n")
     print("Then run this program again.")
 
 

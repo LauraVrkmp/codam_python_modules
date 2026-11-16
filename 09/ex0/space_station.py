@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  space_station.py                                  :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/11/12 14:50:59 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/14 15:15:35 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/16 12:00:32 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -21,8 +21,21 @@ class SpaceStation(BaseModel):
     power_level: float = Field(ge=0.0, le=100.0)
     oxygen_level: float = Field(ge=0.0, le=100.0)
     last_maintenance: datetime
-    is_operational: bool
+    is_operational: bool = Field(default=True)
     notes: str | None = Field(default=None, max_length=200)
+
+
+def print_instance(instance: SpaceStation):
+    print("Valid station created:")
+    print(f"ID: {instance.station_id}")
+    print(f"Name: {instance.name}")
+    print(f"Crew: {instance.crew_size} people")
+    print(f"Power: {instance.power_level}%")
+    print(f"Oxygen: {instance.oxygen_level}%")
+    if instance.is_operational:
+        print("Status: Operational")
+    else:
+        print("Out of operation")
 
 
 def main():
@@ -37,34 +50,30 @@ def main():
     is_operational: bool = True
     notes: str | None = "Central station"
     try:
-        instance = SpaceStation(station_id=station_id, name=name, crew_size=crew_size, power_level=power_level, oxygen_level=oxygen_level, last_maintenance=last_maintenance, is_operational=is_operational, notes=notes)
-        print("Valid station created:")
-        print(f"ID: {instance.station_id}")
-        print(f"Name: {instance.name}")
-        print(f"Crew: {instance.crew_size} people")
-        print(f"Power: {instance.power_level}%")
-        print(f"Oxygen: {instance.oxygen_level}%")
-        if instance.is_operational:
-            print(f"Status: Operational")
-        else:
-            print("Out of operation")
+        instance = SpaceStation(station_id=station_id, name=name,
+                                crew_size=crew_size, power_level=power_level,
+                                oxygen_level=oxygen_level,
+                                last_maintenance=last_maintenance,
+                                is_operational=is_operational, notes=notes)
+        print_instance(instance)
     except ValidationError as e:
-        print(f"Invalid data provided: {e}")
+        print("\n".join(f"{err['loc'][0]}: {err['msg']}"
+                        for err in e.errors()))
     invalid_crew = 23
+    print("\n========================================")
+    print("Expected validation error:")
     try:
-        invalid_instance = SpaceStation(station_id=station_id, name=name, crew_size=invalid_crew, power_level=power_level, oxygen_level=oxygen_level, last_maintenance=last_maintenance, is_operational=is_operational, notes=notes)
-        print("Valid station created:")
-        print(f"ID: {invalid_instance.station_id}")
-        print(f"Name: {invalid_instance.name}")
-        print(f"Crew: {invalid_instance.crew_size} people")
-        print(f"Power: {invalid_instance.power_level}%")
-        print(f"Oxygen: {invalid_instance.oxygen_level}%")
-        if invalid_instance.is_operational:
-            print(f"Status: Operational")
-        else:
-            print("Out of operation")
+        invalid_instance = SpaceStation(station_id=station_id, name=name,
+                                        crew_size=invalid_crew,
+                                        power_level=power_level,
+                                        oxygen_level=oxygen_level,
+                                        last_maintenance=last_maintenance,
+                                        is_operational=is_operational,
+                                        notes=notes)
+        print_instance(invalid_instance)
     except ValidationError as e:
-        print(f"Invalid data provided: {e}")
+        print("\n".join(f"{err['loc'][0]}: {err['msg']}"
+                        for err in e.errors()))
 
 
 if __name__ == "__main__":

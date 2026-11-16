@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  space_station.py                                  :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/11/12 14:50:59 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/16 12:00:32 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/16 17:49:36 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -41,14 +41,14 @@ def print_instance(instance: SpaceStation):
 def main():
     print("Space Station Data Validation")
     print("========================================")
-    station_id: str = "ISS001"
-    name: str = "International Space Station"
-    crew_size: int = 6
-    power_level: float = 85.5
-    oxygen_level: float = 92.3
-    last_maintenance: datetime = datetime(2023, 10, 11)
-    is_operational: bool = True
-    notes: str | None = "Central station"
+    station_id = "ISS001"
+    name = "International Space Station"
+    crew_size = 6
+    power_level = 85.5
+    oxygen_level = 92.3
+    last_maintenance = datetime(2023, 10, 11)
+    is_operational = True
+    notes = "Central station"
     try:
         instance = SpaceStation(station_id=station_id, name=name,
                                 crew_size=crew_size, power_level=power_level,

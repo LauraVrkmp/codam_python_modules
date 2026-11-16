@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  alien_contact.py                                  :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/11/12 14:51:27 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/16 13:48:05 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/16 17:49:50 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -63,15 +63,15 @@ def print_instance(instance: AlienContact):
 def main():
     print("Alien Contact Log Validation")
     print("======================================")
-    contact_id: str = "AC_2024_001"
-    timestamp: datetime = datetime(2023, 5, 12)
-    location: str = "Area 51, Nevada"
-    contact_type: ContactType = ContactType.RADIO
-    signal_strength: float = 8.5
-    duration_minutes: int = 45
-    witnesses: int = 5
-    message: str = "'Greetings from Zeta Reticuli'"
-    is_verified: bool = True
+    contact_id = "AC_2024_001"
+    timestamp = datetime(2023, 5, 12)
+    location = "Area 51, Nevada"
+    contact_type = ContactType.RADIO
+    signal_strength = 8.5
+    duration_minutes = 45
+    witnesses = 5
+    message = "'Greetings from Zeta Reticuli'"
+    is_verified = True
     try:
         instance = AlienContact(contact_id=contact_id, timestamp=timestamp,
                                 location=location, contact_type=contact_type,
@@ -82,12 +82,16 @@ def main():
                                 is_verified=is_verified)
         print_instance(instance)
     except ValidationError as e:
-        print("\n".join(f"{err['loc'][0]}: {err['msg']}"
-                        for err in e.errors()))
+        print("\n".join(
+                    err["msg"].removeprefix("Value error, ")
+                    if err["type"] == "value_error"
+                    else f"{err['loc'][0]}: {err['msg']}"
+                    for err in e.errors()
+                    ))
     print("\n======================================")
     print("Expected validation error:")
-    contact_edited: ContactType = ContactType.TELEPATHIC
-    witnesses_edited: int = 2
+    contact_edited = ContactType.TELEPATHIC
+    witnesses_edited = 2
     try:
         invalid_instance = AlienContact(contact_id=contact_id,
                                         timestamp=timestamp, location=location,

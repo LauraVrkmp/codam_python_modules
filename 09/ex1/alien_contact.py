@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  alien_contact.py                                  :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/11/12 14:51:27 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/16 17:49:50 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/18 10:42:44 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -16,6 +16,7 @@ from datetime import datetime
 
 
 class ContactType(StrEnum):
+    """Enum class for types of contact"""
     RADIO = "radio"
     VISUAL = "visual"
     PHYSICAL = "physical"
@@ -23,6 +24,7 @@ class ContactType(StrEnum):
 
 
 class AlienContact(BaseModel):
+    """AlienContact class based on BaseModel"""
     contact_id: str = Field(min_length=5, max_length=15)
     timestamp: datetime
     location: str = Field(min_length=3, max_length=100)
@@ -35,6 +37,7 @@ class AlienContact(BaseModel):
 
     @model_validator(mode="after")
     def validate_values(self):
+        """"Custom validation function"""
         if not self.contact_id.startswith("AC"):
             raise ValueError("Contact ID must start with 'AC'")
         if self.contact_type == ContactType.PHYSICAL and not self.is_verified:
@@ -50,6 +53,7 @@ class AlienContact(BaseModel):
 
 
 def print_instance(instance: AlienContact):
+    """Print the AlienContact variable values"""
     print("Valid contact report:")
     print(f"ID: {instance.contact_id}")
     print(f"Type: {instance.contact_type}")
@@ -61,6 +65,7 @@ def print_instance(instance: AlienContact):
 
 
 def main():
+    """Main to test valid and invalid AlienContact instances"""
     print("Alien Contact Log Validation")
     print("======================================")
     contact_id = "AC_2024_001"

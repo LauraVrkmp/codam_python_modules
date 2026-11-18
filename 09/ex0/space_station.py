@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  space_station.py                                  :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/11/12 14:50:59 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/16 17:49:36 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/18 10:41:35 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -15,6 +15,7 @@ from datetime import datetime
 
 
 class SpaceStation(BaseModel):
+    """SpaceStation class based on BaseModel"""
     station_id: str = Field(min_length=3, max_length=10)
     name: str = Field(min_length=1, max_length=50)
     crew_size: int = Field(ge=1, le=20)
@@ -26,6 +27,7 @@ class SpaceStation(BaseModel):
 
 
 def print_instance(instance: SpaceStation):
+    """Print the SpaceStation variable values"""
     print("Valid station created:")
     print(f"ID: {instance.station_id}")
     print(f"Name: {instance.name}")
@@ -39,6 +41,7 @@ def print_instance(instance: SpaceStation):
 
 
 def main():
+    """Main to initialize valid and invalid SpaceStation instances"""
     print("Space Station Data Validation")
     print("========================================")
     station_id = "ISS001"

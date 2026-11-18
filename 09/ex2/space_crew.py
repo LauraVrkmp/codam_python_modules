@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  space_crew.py                                     :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
+#  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/11/12 14:51:46 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/16 17:48:19 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/18 10:45:24 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -16,6 +16,7 @@ from datetime import datetime
 
 
 class Rank(StrEnum):
+    """Enum class for types of rank"""
     CADET = "cadet"
     OFFICER = "officer"
     LIEUTENANT = "lieutenant"
@@ -24,6 +25,7 @@ class Rank(StrEnum):
 
 
 class CrewMember(BaseModel):
+    """CrewMember class based on BaseModel"""
     member_id: str = Field(min_length=3, max_length=10)
     name: str = Field(min_length=2, max_length=50)
     rank: Rank
@@ -34,6 +36,7 @@ class CrewMember(BaseModel):
 
 
 class SpaceMission(BaseModel):
+    """SpaceMission class based on BaseModel"""
     mission_id: str = Field(min_length=5, max_length=15)
     mission_name: str = Field(min_length=3, max_length=100)
     destination: str = Field(min_length=3, max_length=50)
@@ -45,6 +48,7 @@ class SpaceMission(BaseModel):
 
     @model_validator(mode="after")
     def validate_values(self):
+        """Custom validation function"""
         if not self.mission_id.startswith("M"):
             raise ValueError("Mission ID must start with 'M'")
         if not any(member.rank in ("captain, commander")
@@ -60,6 +64,7 @@ class SpaceMission(BaseModel):
 
 
 def create_members(valid: bool):
+    """Functions to initialize crew members"""
     name_1 = "Sarah Connor"
     if valid:
         rank_1 = Rank.COMMANDER
@@ -85,6 +90,7 @@ def create_members(valid: bool):
 
 
 def print_mission(instance: SpaceMission):
+    """Print the SpaceMision variable values"""
     print("Valid mission created:")
     print(f"Mission: {instance.mission_name}")
     print(f"ID: {instance.mission_id}")
@@ -98,6 +104,7 @@ def print_mission(instance: SpaceMission):
 
 
 def main():
+    """Main to test valid and invalid SpaceMission instances"""
     print("Space Mission Crew Validation")
     print("=========================================")
     mission_id = "M2024_MARS"

@@ -6,7 +6,7 @@
 #  By: laveerka                                  +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/11/16 20:22:28 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/19 14:20:30 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/20 11:27:20 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -22,11 +22,11 @@ def charm(target: str, power: int) -> str:
 
 
 def fireball(target: str, power: int) -> str:
-    return f"{target} used fireball and damaged by {power} HP"
+    return f"{target} used fireball and inflicted damaged by {power} HP"
 
 
 def heal(target: str, power: int) -> str:
-    return f"Heal restores {target} for {power} HP"
+    return f"{target} used heal and restored {power} HP"
 
 
 def tackle(target: str, power: int) -> str:
@@ -70,24 +70,27 @@ def valid_power(target: str, power: int) -> bool:
 
 
 def main() -> None:
-    print("Testing spell combiner...")
+    print("\nTesting spell combiner...")
     combined = spell_combiner(fireball, heal)
     com_result = combined(target="Dragon", power=7)
-    print(f"Combined spell result: {com_result}")
+    print("\nCombined spell result:")
+    for com_item in com_result:
+        print(f"{com_item}")
     print("\nTesting power amplifier...")
     original_power = tackle("Goblin", 13)
     amplified_spell = power_amplifier(base_spell=tackle, multiplier=3)
-    amplified_power = amplified_spell("Goblin", 13)
-    print(f"Original: {original_power}, Amplified: {amplified_power}")
+    amplified_power = amplified_spell(target="Goblin", power=13)
+    print(f"\nOriginal: {original_power}")
+    print(f"Amplified: {amplified_power}")
     print("\nTesting conditional caster...")
     caster = conditional_caster(valid_power, charm)
-    print("Valid power:")
-    print(f"- {caster('Wizard', 50)}")
-    print("Invalid power:")
-    print(f"- {caster('Knight', 0)}")
-    print("\nTesting spell sequence...")
+    print(f"\nValid: {caster(target='Wizard', power=50)}")
+    print(f"Invalid: {caster(target='Wizard', power=0)}")
+    print("\nTesting spell sequence...\n")
     sequence = spell_sequence([bash, heal, tackle])
-    print(f"{sequence('Unicorn', 14)}")
+    sequence_list = sequence(target='Knight', power=14)
+    for seq_item in sequence_list:
+        print(f"{seq_item}")
 
 
 if __name__ == "__main__":

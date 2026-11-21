@@ -3,10 +3,10 @@
 #                                                      :::      ::::::::    #
 #  scope_mysteries.py                                :+:      :+:    :+:    #
 #                                                  +:+ +:+         +:+      #
-#  By: laveerka                                  +#+  +:+       +#+         #
+#  By: laveerka <laveerka@student.codam.nl>      +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/11/16 20:22:48 by laveerka        #+#    #+#               #
-#  Updated: 2026/11/20 13:16:44 by laveerka        ###   ########.fr        #
+#  Updated: 2026/11/20 23:21:33 by laveerka        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -30,7 +30,7 @@ def spell_accumulator(initial_power: int) -> Callable:
         nonlocal accumulated_power
         accumulated_power += amount
         return accumulated_power
-    return accumulate  
+    return accumulate
 
 
 def enchantment_factory(enchantment_type: str) -> Callable:
@@ -40,14 +40,20 @@ def enchantment_factory(enchantment_type: str) -> Callable:
 
 
 def memory_vault() -> dict[str, Callable]:
-    pass
+    memory = {}
+
+    def store(key, value):
+        memory[key] = value
+
+    def recall(key):
+        return memory.get(key, "Memory not found")
+    return {"store": store, "recall": recall}
 
 
 def main() -> None:
     print("Testing mage counter...")
     counter_a = mage_counter()
     print(f"counter_a call 1: {counter_a()}")
-    counter_a = mage_counter()
     print(f"counter_a call 2: {counter_a()}")
     counter_b = mage_counter()
     print(f"counter_b call 1: {counter_b()}")
@@ -59,8 +65,18 @@ def main() -> None:
     print("\nTesting enchantment factory...")
     type_1 = enchantment_factory("Flaming")
     type_2 = enchantment_factory("Frozen")
-    print(f"{type_1} {type_1('Sword')}")
-    print(f"{type_2} {type_2('Shield')}")
+    print(f"{type_1('Sword')}")
+    print(f"{type_2('Shield')}")
+    print("\nTesting memory vault...")
+    key = "secret"
+    value = 42
+    print(f"Store '{key}' = {value}")
+    vault = memory_vault()
+    vault["store"]("key", "secret")
+    vault["store"]("value", 42)
+    print(f"Recall '{vault["recall"]("key")}': ", end="")
+    print(f"{vault["recall"]("value")}")
+    print(f"Recall 'unknown': {vault["recall"]("unknown")}")
 
 
 if __name__ == "__main__":
